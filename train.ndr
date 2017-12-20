@@ -1,0 +1,73 @@
+t 105.0 535.0 xA2 s 0 w n {} ne
+p 30.0 435.0 p0 2 n
+p 265.0 535.0 p1 0 n
+t 680.0 535.0 xC2 0 w n
+p 800.0 535.0 p3 0 n
+t 940.0 515.0 xD2 0 w n
+t 930.0 330.0 xD1 0 w n
+t 685.0 300.0 xC1 0 w n
+p 1000.0 400.0 p4 1 n
+p 845.0 305.0 p5 0 n
+p 255.0 295.0 p7 0 n
+t 110.0 300.0 xA1 0 w n
+t 380.0 295.0 xB1 0 w n
+p 525.0 300.0 p6 0 n
+p 510.0 725.0 p11 1 n
+t 595.0 645.0 xG2 0 w n
+p 330.0 140.0 p9 0 n
+t 345.0 55.0 xE1 0 w n
+t 595.0 55.0 xE2 0 w n
+p 460.0 50.0 p8 1 n
+p 595.0 135.0 p12 0 n
+t 605.0 410.0 xB22 0 w n
+p 530.0 535.0 p2 0 n
+p 600.0 495.0 p13 0 n
+t 350.0 690.0 xG1 0 w n
+p 350.0 600.0 p10 0 n
+t 345.0 390.0 xB12 0 w n
+t 325.0 220.0 xF1 0 w n
+p 320.0 320.0 p15 0 n
+t 600.0 225.0 xF2 0 w n
+p 600.0 320.0 p14 0 n
+t 435.0 535.0 xB2 s 0 w n {} ne
+p 490.0 440.0 p17 0 n
+p 395.0 450.0 p16 0 n
+e p17 xB22 1 n
+e xB2 0.01221862598 39.11521443 p17 0.6827007074 40.0 1 n
+e p16 0.8200031213 40 xB2 0.4321001256 36.24913792 1 n
+e xB12 p16 1 n
+e p15 xB12 1 n
+e xF1 p15 1 n
+e p9 xF1 1 n
+e xE1 p9 1 n
+e p8 xE1 1 n
+e xE2 p8 1 n
+e p12 xE2 1 n
+e xF2 p12 1 n
+e p14 xF2 1 n
+e xB22 p14 1 n
+e p13 xB22 1 n
+e xG2 p13 1 n
+e p11 xG2 1 n
+e xG1 p11 1 n
+e p10 xG1 1 n
+e xB12 p10 1 n
+e xA1 p0 1 n
+e p7 xA1 1 n
+e xB1 p7 1 n
+e p6 xB1 1 n
+e xC1 p6 1 n
+e p5 xC1 1 n
+e xD1 p5 1 n
+e p4 xD1 1 n
+e xD2 p4 1 n
+e p3 xD2 1 n
+e xC2 p3 1 n
+e p2 xC2 1 n
+e xB2 p2 1 n
+e p1 xB2 1 n
+e xA2 p1 1 n
+e p0 xA2 1 n
+h train
+
+
