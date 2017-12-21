@@ -18,7 +18,9 @@ Voici la nouvelle représentation d'état correspondant à cette contrainte, fig
 \caption{\label{fig:get_train_decompo} Graphe des Événements Temporisé décomposé du réseau de transport }
 \end{figure}
 \section{Analyse, matrice d'évolution et valeurs propres}
-Nous abordons ici, dans l'ordre, la mise en représentation d'état du réseau de transport, l'analyse de réductibilité et le calcul des valeurs et vecteurs propres.
+Nous abordons ici, dans l'ordre, la mise en représentation d'état du réseau de transport, l'analyse de réductibilité et le calcul des valeurs et vecteurs propres. 
+\subsection{Représentation d'état}
+Afin de réaliser la mise en représentation d'état, nous avons extrait les égalisés suivantes :
 \begin{align*}
 \left\lbrace
 \begin{array}{l c l}
@@ -41,8 +43,54 @@ x_{E1}(k) &=&	5x_{F2}(k)   \\
 \end{array}
 \right.
 \end{align*}
-
-
+On peut remarquer que notre système est autonome, c'est-à-dire qu'il ne présente pas d'entrée ou de sortie 
+dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessaires.
+\begin{equation}
+\left\lbrace
+\begin{array}{lcl}
+	x(k) &=& A_0 \cdot x(k) + A_1 \cdot x(k-1) + B u(k)\\
+	y(k) &=& C \cdot x(k)
+\end{array}
+\right. \Leftrightarrow
+\left\lbrace\begin{array}{lcl}
+	x(k) &=& A \cdot x(k-1)
+\end{array}\right.
+\end{equation}
+Ces égalités nous ont permis de créer la matrice dynamique suivante : 
+\begin{equation}
+A = \left(\begin{array}{ccccccccccccccccc}
+.&.&.&.&19&.&.&.&.& .&.&.&.& .&.&.&. \\
+.&.&.&.&12&.&.&.&.& .&.&.&.& .&.&.&. \\
+.&.&.&.&6& .&.&.&.& .&.&.&.& .&.&.&. \\
+.&.&.&.&2& .&.&.&.& .&.&.&.& .&.&.&. \\
+.&.&.&.&.& .&.&.&19&.&.&.&.& .&.&.&20\\
+.&.&.&.&.& .&.&.&15&.&.&.&.& .&.&.&16\\
+.&.&.&.&.& .&.&.&9& .&.&.&.& .&.&.&10\\
+.&.&.&.&.& .&.&.&2& .&.&.&.& .&.&.&.\\
+0&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&. \\
+.&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&2 \\
+.&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&7 \\
+.&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&10\\
+.&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&12\\
+.&.&.&.&.& .&.&.&.& .&.&.&2& .&.&.&. \\
+.&.&.&.&.& .&.&.&9& .&.&.&4& .&.&.&8 \\
+.&.&.&.&.& .&.&.&12&.&.&.&7& .&.&.&11\\
+.&.&.&.&.& .&.&.&17&.&.&.&12&.&.&.&18
+\end{array}\right)
+\end{equation}
+($.$ signifie $\epsilon$)
+\subsection{Irréductibilité}
+Maintenant que nous avons une représentation d'état de notre procédé, nous allons étudier s'il est irréductible ou non, si c'est le cas, cela signifie qu'il a une unique valeur propre (c'est une implication et non une équivalence). Une des méthodes de vérification de la propriété d'irréductibilité d'une matrice est de vérifier si elle comporte une ligne ou une colonnes d'éléments neutres ($\epsilon$).
+Nous pouvons voir ici que la matrice A comporte au moins 12 colonnes d'éléments neutres, elle est donc réductible. Une des autres façon est de voir si le graphe des marquages accessible est fortement connexe ou non. Si il n'est, elle est irréductible. Figure \ref{fig:gma_train}, on peut voir que ce n'est pas le cas les états 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, 15 et 16 sont des états puits.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .4\textwidth]{./I/images/GMA.png}
+\caption{\label{fig:gma_train} Graphe des Marquages accessibles de $A$}
+\end{figure}
+\subsection{Valeur propre}
+Nous avons calculé la valeur propre à l'aide de ScicosLab, elle est unique est vaux 18. Cela veut dire que le cycle interne du système est de 18 événements une fois le régime permanent établi.
+\subsection{Vecteur propre}
+Comme précédemment, nous avons utilité ScicosLab pour calculer le vecteur propre de $A$.
 \section{Commande des conditions initiales}
 
 
