@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<XmlAutomaton Stochastic="false" numberOfAgents="1" hasOutput="false">
+    <state name="1" marked="false" initial="true" opacityOk="true">
+        <position x="388" y="210"/>
+        <size width="40" height="40"/>
+        <initialPosition x="-28" y="-28"/>
+    </state>
+    <state name="10" marked="false" opacityOk="true">
+        <position x="216" y="102"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="11" marked="false" opacityOk="true">
+        <position x="264" y="52"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="12" marked="false" opacityOk="true">
+        <position x="511" y="65"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="13" marked="false" opacityOk="true">
+        <position x="525" y="285"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="14" marked="false" opacityOk="true">
+        <position x="601" y="340"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="15" marked="false" opacityOk="true">
+        <position x="448" y="343"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="16" marked="false" opacityOk="true">
+        <position x="512" y="400"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="17" marked="false" opacityOk="true">
+        <position x="382" y="77"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="2" marked="false" opacityOk="true">
+        <position x="227" y="283"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="3" marked="false" opacityOk="true">
+        <position x="236" y="222"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="4" marked="false" opacityOk="true">
+        <position x="278" y="303"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="5" marked="false" opacityOk="true">
+        <position x="310" y="191"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="6" marked="false" opacityOk="true">
+        <position x="218" y="436"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="7" marked="false" opacityOk="true">
+        <position x="195" y="343"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="8" marked="false" opacityOk="true">
+        <position x="365" y="424"/>
+        <size width="40" height="40"/>
+    </state>
+    <state name="9" marked="false" opacityOk="true">
+        <position x="342" y="347"/>
+        <size width="40" height="40"/>
+    </state>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="0" from="1" to="9" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="2" from="13" to="14" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="4" from="13" to="15" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="7" from="13" to="16" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="12" from="13" to="17" legal="true">
+        <pathPoint x="500" y="235"/>
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="20" from="17" to="5" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="16" from="17" to="6" legal="true">
+        <pathPoint x="204" y="214"/>
+        <pathPoint x="167" y="317"/>
+        <labelPosition x="484" y="1"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="10" from="17" to="7" legal="true">
+        <pathPoint x="218" y="234"/>
+        <pathPoint x="189" y="288"/>
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="10" from="17" to="12" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="2" from="17" to="10" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="7" from="17" to="11" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="12" from="17" to="13" legal="true">
+        <pathPoint x="526" y="223"/>
+        <labelPosition x="616" y="-1"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="8" from="17" to="15" legal="true">
+        <pathPoint x="469" y="245"/>
+        <labelPosition x="629" y="-3"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="11" from="17" to="16" legal="true">
+        <pathPoint x="596" y="245"/>
+        <pathPoint x="652" y="371"/>
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="18" from="17" to="17" legal="true">
+        <pathPoint x="382" y="47"/>
+        <pathPoint x="402" y="32"/>
+        <pathPoint x="422" y="47"/>
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="19" from="5" to="1" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="12" from="5" to="2" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="6" from="5" to="3" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="2" from="5" to="4" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="19" from="9" to="5" legal="true">
+        <pathPoint x="360" y="279"/>
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="15" from="9" to="6" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="9" from="9" to="7" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="9" from="9" to="15" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="2" from="9" to="8" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="12" from="9" to="16" legal="true">
+        <labelPosition x="500" y="0"/>
+    </transition>
+    <transition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlTransition" name="17" from="9" to="17" legal="true">
+        <pathPoint x="434" y="266"/>
+        <labelPosition x="434" y="4"/>
+    </transition>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="0" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="19" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="12" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="6" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="2" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="15" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="9" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="17" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="4" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="7" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="20" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="16" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="10" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="8" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="11" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <event xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="XmlEvent" name="18" observable="true" controllable="true">
+        <AgentProperty observable="true" controllable="true"/>
+    </event>
+    <initial>1</initial>
+</XmlAutomaton>
