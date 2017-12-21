@@ -42,7 +42,7 @@ B(x4,2) = 4;
 B(x5,2) = 5;
 B(x6,1) = 1;
 
-B = full(B)
+B = full(B);
 
 
 // Matice C
@@ -51,9 +51,9 @@ C = %zeros(1,9);
 C(1,x9)=4;
 
 //******************************      Fonctions de transfert
-h_0 = C*B;
-h_0 = full(h_0)
-
+H = [];
+for i = 1:5
+    H(i) =C*(A^i)*B
 
 
 
