@@ -1,6 +1,52 @@
 \chapter{Optimisation d'une ressource dans un problème de jobshop}
-Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le ravail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, pour déterminer le cycle associé de chacun.
+Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, pour déterminer le cycle associé de chacun.
 
 \section{GET associé à chaque solution}
+%% Ordonnancement 1	:		M2 --> A		B
+%%							M1 -->   A - B
+
+%% Ordonnancement 2	:		M2 --> A		B	NON RESPECT
+%%							M1 -->   A - B		NON RESPECT
+
+%% Ordonnancement 3	:		M2 --> A - B
+%%							M1 --> B - A
+
+%% Ordonnancement 4	:		M2 --> 	  B	- A
+%%							M1 --> B 		A
 
 \section{Représentation d'état et analyse du cycle associé}
+\begin{align*}\label{equ:ordo1}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 10x_{AM_1}(k-1) \oplus 9x_{BM_2}(k-1)\oplus x_{BM_1}(k-1)\\
+x_{AM_2}(k)&=&4x_{AM_1}(k-1) \oplus 3x_{BM_2}(k-1)\\
+x_{BM_1}(k)&=& 11x_{BM_1}(k-1) \oplus 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 20x_{BM_2}(k-1) \oplus 21x_{AM_1}(k-1) \oplus 18x_{BM_1}(k-1)\\
+\end{array}
+\right.
+\end{align*} qui donne une représentation d'état suivante : 
+\begin{align*}
+X(k)
+\end{align*}
+L'ordonnancement 2 n'est pas réalisable.
+\begin{align*}%\label{equ:ordo3}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 10x_{AM_1}(k-1) \oplus  9x_{BM_2}(k-1)\\
+x_{AM_2}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_1}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1)\\
+\end{array}
+\right.
+\end{align*}
+
+\begin{align*}%\label{equ:ordo4}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 20x_{AM_1}(k-1) \oplus 19x_{BM_2}(k-1) \oplus 15x_{AM2}(k-1)\\
+x_{AM_2}(k)&=& 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1) \oplus  9x_{AM2}(k-1)\\
+x_{BM_1}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1) \oplus  6x_{AM2}(k-1)\\
+\end{array}
+\right.
+\end{align*}
