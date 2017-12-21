@@ -48,9 +48,11 @@ B = full(B)
 // Matice C
 C = %zeros(1,9);
 
-C(x9)=4;
+C(1,x9)=4;
 
 //******************************      Fonctions de transfert
+h_0 = C*B;
+h_0 = full(h_0)
 
 
 
