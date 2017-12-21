@@ -1,21 +1,43 @@
 \chapter{Optimisation d'une ressource dans un problème de jobshop}
-Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, pour déterminer le cycle associé de chacun.
+Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent, le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, afin déterminer le cycle de temps associé de chacun.
 
-\section{GET associé à chaque solution}
+\section{Étude du problème}
 %% Ordonnancement 1	:		M2 --> A		B
 %%							M1 -->   A - B
 
-%% Ordonnancement 2	:		M2 --> A		B	NON RESPECT
+%% Ordonnancement 2	:		M2 -->   B - A		NON RESPECT
 %%							M1 -->   A - B		NON RESPECT
 
-%% Ordonnancement 3	:		M2 --> A - B
-%%							M1 --> B - A
+%% Ordonnancement 3	:		M2 --> 	 A - B
+%%							M1 --> 	 B - A
 
 %% Ordonnancement 4	:		M2 --> 	  B	- A
 %%							M1 --> B 		A
+Le problème de cet exercice peut être décomposé en deux sous problèmes équivalents. Le premier concerne l'ordre dans lequel les pièces $A$ et $B$ peuvent être traités par les machines : $A$ ne peut pas passer sur $M_1$ tant qu'elle n'est pas d'abord passer sur $M_2$. Pour la pièce $B$, elle doit d'abord passer par $M_1$ puis elle va sur $M_2$, comme cela est expliqué dans l'ennoncé. 
 
-\section{Représentation d'état et analyse du cycle associé}
+Le deuxième problème qui apparait n'en ai pas vraiment un, il s'agit de choisir l'ordonnancement des usinages de pièces. Très naturellement, pour 2 machines et 2 pièces il vient $2\times 2$ possibilité d'ordonnancement qui sont : \begin{itemize}
+\item \label{item:o1} \textbf{Ordonnancement 1} $M_2 \rightarrow A$ puis $M_1 \rightarrow A \rightarrow B$ et  $M_2 \rightarrow B$ 
+\item \label{item:o2}\textbf{Ordonnancement 2} $M_2 \rightarrow B \rightarrow A $ parallèle à $M1 \rightarrow A \rightarrow B$
+\item \label{item:o3}\textbf{Ordonnancement 3}	$M_2 \rightarrow A \rightarrow B $ parallèle à $M1 \rightarrow B \rightarrow A$
+\item \label{item:o4}\textbf{Ordonnancement 4}	$M_1 \rightarrow B$ puis $M_2 \rightarrow A \rightarrow B$ et  $M_1 \rightarrow B$
+\end{itemize}
+
+Pour modéliser notre problème sous forme de GET, nous aurons besoin des évènements qui lient les machines et les pièces entre elles. Nous pouvons obtenir ces informations à partir du tableau donné dans le sujet de TP. Ces temps d'attentes seront utilisés dans les temps d'attentes des places du GET pour modéliser le temps que met une pièce $x$ à être usiné par une machine $y$.
+
+\section{Modélisation des GET et représentation d'état et analyse du cycle associé}
+\begin{figure}[!ht]
+\centering
+%\includegraphics[width = \textwidth]{./II/images/GET.pdf}
+\caption{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
+\end{figure}
+Dans un premier temps, nous avons réalisé le graph des événements temporisés général(voir figure \ref{fig:get}). Ce graph a 4 transitions (en noir). Elles correspondent, en partant de celle en haut à gauche et dans le sens horaire, à \emph{A est usiné dans M1}, \emph{B est usiné dans M1}, \emph{B est usiné dans M2} et à \emph{A est usiné dans M2}. Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du graph, elles font offices de légendes pour la couleurs des éléments du graph.
+
 \subsection{Ordonnancement 1}
+\begin{figure}[!ht]
+\centering
+%\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
+\caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 1 (\ref{item:o1})}
+\end{figure}
 \begin{align*}
 \left\lbrace
 \begin{array}{lcl}
@@ -25,7 +47,7 @@ x_{BM_1}(k)&=& 11x_{BM_1}(k-1) \oplus 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1)\\
 x_{BM_2}(k)&=& 20x_{BM_2}(k-1) \oplus 21x_{AM_1}(k-1) \oplus 18x_{BM_1}(k-1)\\
 \end{array}
 \right.
-\end{align*} qui donne une représentation d'état suivante : 
+\end{align*} Pour pouvoir utiliser les analyse qui donne une représentation d'état suivante : 
 \begin{align}\label{equ:ordo1}
 X(k) = \begin{pmatrix}
 x_{AM1}(k) \\ x_{AM2}(k) \\ x_{BM1}(k)\\ x_{BM2}(k)
@@ -44,6 +66,11 @@ OBSERVATION NECESSAIRE !!!!!!! %%% TODO
 \subsection{Ordonnancement 2}
 L'ordonnancement 2 n'est pas réalisable.
 \subsection{Ordonnancement 3}
+\begin{figure}[!ht]
+\centering
+%\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
+\caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 3 (\ref{item:o3})}
+\end{figure}
 \begin{align*}%\label{equ:ordo3}
 \left\lbrace
 \begin{array}{lcl}
@@ -69,6 +96,11 @@ Comme pour l'ordonnancement précédent, nous calculons la valeurs propres du sy
 \end{eqnarray*}
 
 \subsection{Ordonnancement 4}
+\begin{figure}[!ht]
+\centering
+%\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
+\caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 4(\ref{item:o4})}
+\end{figure}
 \begin{align*}%\label{equ:ordo4}
 \left\lbrace
 \begin{array}{lcl}
