@@ -21,7 +21,7 @@ A1(BM1,BM2) = 13;
 A1(BM2,AM1) = 21;
 A1(BM2,BM1) = 18;
 A1(BM2,BM2) = 20;
-
+vp1 = karp(A1);
 // AM2 | BM1 > BM2 | AM1
 A2 = full(%zeros(4,4));
 A2(AM1,AM1) = 11 ;
@@ -35,7 +35,7 @@ A2(BM1,BM2) = 3 ;
 
 A2(BM2,AM1) = 11 ;
 A2(BM2,BM2) = 10 ;
-
+vp2 = karp(A2);
 // BM1 > BM2 > AM2 > AM1
 A3 = full(%zeros(4,4));
 A3(AM1,AM1) =20 ;
@@ -52,3 +52,4 @@ A3(BM1,BM2) = 3;
 A3(BM2,AM1) = 11;
 A3(BM2,AM2) = 6;
 A3(BM2,BM2) = 10;
+vp3 = karp(A3);
