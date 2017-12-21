@@ -1,6 +1,89 @@
 \chapter{Optimisation d'une ressource dans un problème de jobshop}
-Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le ravail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, pour déterminer le cycle associé de chacun.
+Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, pour déterminer le cycle associé de chacun.
 
 \section{GET associé à chaque solution}
+%% Ordonnancement 1	:		M2 --> A		B
+%%							M1 -->   A - B
+
+%% Ordonnancement 2	:		M2 --> A		B	NON RESPECT
+%%							M1 -->   A - B		NON RESPECT
+
+%% Ordonnancement 3	:		M2 --> A - B
+%%							M1 --> B - A
+
+%% Ordonnancement 4	:		M2 --> 	  B	- A
+%%							M1 --> B 		A
 
 \section{Représentation d'état et analyse du cycle associé}
+\subsection{Ordonnancement 1}
+\begin{align*}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 10x_{AM_1}(k-1) \oplus 9x_{BM_2}(k-1)\oplus 7x_{BM_1}(k-1)\\
+x_{AM_2}(k)&=&4x_{AM_1}(k-1) \oplus 3x_{BM_2}(k-1)\\
+x_{BM_1}(k)&=& 11x_{BM_1}(k-1) \oplus 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 20x_{BM_2}(k-1) \oplus 21x_{AM_1}(k-1) \oplus 18x_{BM_1}(k-1)\\
+\end{array}
+\right.
+\end{align*} qui donne une représentation d'état suivante : 
+\begin{align}\label{equ:ordo1}
+X(k) = \begin{pmatrix}
+x_{AM1}(k) \\ x_{AM2}(k) \\ x_{BM1}(k)\\ x_{BM2}(k)
+\end{pmatrix} 
+= \begin{pmatrix}
+10 & \epsilon & 7 &9\\
+4 & \epsilon & \epsilon & 3\\
+14 & \epsilon & 11 & 13\\
+21 & \epsilon & 18 & 20
+\end{pmatrix}X(k-1) = A_1X(k-1)
+\end{align}
+Pour trouver le temps de cycle, nous proposons d'analyser le ou les valeurs propres de A. Nous obtenons avec ScicosLab et la fonction \emph{karp} le résultat suivant : \begin{eqnarray*}
+\lambda(A_1) = 20
+\end{eqnarray*}
+OBSERVATION NECESSAIRE !!!!!!! %%% TODO
+\subsection{Ordonnancement 2}
+L'ordonnancement 2 n'est pas réalisable.
+\subsection{Ordonnancement 3}
+\begin{align*}%\label{equ:ordo3}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 10x_{AM_1}(k-1) \oplus  9x_{BM_2}(k-1)\\
+x_{AM_2}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_1}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1)\\
+\end{array}
+\right.
+\end{align*}
+Ce système d'équation du GET peut être représenté sous forme espace d'état avec le même vecteur que d'état que dans \ref{equ:ordo1}. Nous obtenons :
+\begin{align}\label{eqn:eeOrdo3}
+X(k) = \begin{pmatrix}
+10 & \epsilon &\epsilon & 9\\
+4 &\epsilon &\epsilon & 3\\
+4 &\epsilon &\epsilon & 3\\
+11 &\epsilon &\epsilon & 10\\
+\end{pmatrix}X(k-1) = A_2X(k-1)
+\end{align} 
+Comme pour l'ordonnancement précédent, nous calculons la valeurs propres du système pour le temps de cycle : 
+\begin{eqnarray*}
+\lambda(A_2) = 11  
+\end{eqnarray*}
+
+\subsection{Ordonnancement 4}
+\begin{align*}%\label{equ:ordo4}
+\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=& 20x_{AM_1}(k-1) \oplus 19x_{BM_2}(k-1) \oplus 15x_{AM2}(k-1)\\
+x_{AM_2}(k)&=& 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1) \oplus  9x_{AM2}(k-1)\\
+x_{BM_1}(k)&=&  4x_{AM_1}(k-1) \oplus  3x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1) \oplus  6x_{AM2}(k-1)\\
+\end{array}
+\right.
+\end{align*}
+\begin{align}\label{eqn::ee_Ordo4}
+X(k) = \begin{pmatrix}
+20&15&\epsilon&19\\
+14&8&\epsilon&13\\
+4&\epsilon&\epsilon&3\\
+11&6&\epsilon&10
+\end{pmatrix}X(k-1) = A_3X(k-1)
+\end{align}
