@@ -51,9 +51,22 @@ C = %zeros(1,9);
 C(1,x9)=4;
 
 //******************************      Fonctions de transfert
-H = [];
-for i = 1:5
-    H(i) =C*(A^i)*B
+H_0 = C*B; // Fonctionde transfert pour i=0
 
+n = 5;
+H = %zeros(n,2);
+for i = 1:n
+    H(i,:) = C*(A^i)*B;    
+end
+H= [H_0 ; H]
+H = full(H);
 
+// **************************  Réponsedu système pour une commande donné :
+u = [2 5 14 14 16 27;
+     0 3 11 17 20 23];
+ Y = [];
+for i = 1:n+1
+    
+    Y = [Y H(i,:)*u(:,i)];    
+end
 
