@@ -19,7 +19,7 @@ Le deuxième problème qui apparait n'en ai pas vraiment un, il s'agit de choisi
 \item \label{item:o1}\textbf{Ordonnancement 1} $M_2 \rightarrow A$ puis $M_1 \rightarrow A \rightarrow B$ et  $M_2 \rightarrow B$ 
 \item \label{item:o2}\textbf{Ordonnancement 2} $M_2 \rightarrow B \rightarrow A $ parallèle à $M1 \rightarrow A \rightarrow B$
 \item \label{item:o3}\textbf{Ordonnancement 3}	$M_2 \rightarrow A \rightarrow B $ parallèle à $M1 \rightarrow B \rightarrow A$
-\item \label{item:o4}\textbf{Ordonnancement 4}	$M_1 \rightarrow B$ puis $M_2 \rightarrow A \rightarrow B$ et  $M_1 \rightarrow B$
+\item \label{item:o4}\textbf{Ordonnancement 4}	$M_1 \rightarrow B$ puis $M_2 \rightarrow A \rightarrow B$ etpour   $M_1 \rightarrow B$
 \end{enumerate}
 
 Pour modéliser notre problème sous forme de GET, nous aurons besoin des évènements qui lient les machines et les pièces entre elles. Nous pouvons obtenir ces informations à partir du tableau donné dans le sujet de TP,  Ces temps d'attentes seront utilisés dans les temps d'attentes des places du GET pour modéliser le temps que met une pièce à être usiné par une machine. L'entrée d'un jeton dans une place signifie le début du traitement d'une pièce par une machine, la fin de traitement est modélisé par la fin de l'attente d'un jeton dans une place. 
@@ -28,7 +28,7 @@ Les événements qui lient les machines aux pièces sont donc les les liaisons $
 
 \section{Modélisation des GET et représentation d'état et analyse du cycle associé}
 
-Dans un premier temps, nous avons réalisé le graphe des événements temporisés général(voir figure \ref{fig:get}). Ce graph a 4 transitions (en noir) qui se retrouvent sur les intersections être une pièce et une machine qui est doit usiner la pièce. Elles correspondent, en partant de celle en haut à gauche et dans le sens horaire, à \emph{A entre dans M1}, \emph{B entre dans M1}, \emph{B entre dans M2} et à \emph{A entre dans M2}. 
+Dans un premier temps, nous avons réalisé le graphe des événements temporisés général(voir figure \ref{fig:get}). Ce graph a 4 transitions (en noir) qui se retrouvent sur les intersections entre une pièce et une machine qui doit usiner la pièce. Elles correspondent, en partant de celle en haut à gauche et dans le sens horaire, à \emph{A entre dans M1}, \emph{B entre dans M1}, \emph{B entre dans M2} et à \emph{A entre dans M2}. 
 
 Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du graph, elles font offices de légendes pour la couleurs des éléments du graph.
 
@@ -128,7 +128,7 @@ Nous allons effectuer la même analyse que dans la partie précédente (\ref{sub
 Pour obtenir cette séquence, il est nécessaire de disposer le marquage initial de sorte à ce que $x_{AM2}$ et $x_{BM1}$ soit sensibiliser dès le début du traitement.
 \begin{figure}[!ht]
 \centering
-\includegraphics[width = \textwidth]{./II/images/GET_3.pdf}
+\includegraphics[width = .75\textwidth]{./II/images/GET_3.pdf}
 \caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 3 (\ref{item:o3})}
 \end{figure}
 
