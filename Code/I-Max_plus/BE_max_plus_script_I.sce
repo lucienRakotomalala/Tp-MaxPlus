@@ -128,7 +128,7 @@ end
 E12 = 18;
 
 // Nouvelle matrice dynamique avec un train en plus 
-A2 = full(%zeros(18,18));
+A_2 = full(%zeros(18,18));
    // boucle bleu
     A_2(A1,D2)    = 7+6+4+2;
     
@@ -174,3 +174,55 @@ A2 = full(%zeros(18,18));
     A_2(E1,E12)    = 2;
     
     A_2(E12,E2)    =0;
+// calcul du nouveau temps de cycle:
+T2_cycle = karp(A_2)
+
+// cas d'un retard entre les stations B et F.
+A_3 =full(%zeros(17,17)); 
+    // boucle bleu
+    A_3(A1,D2)    =7+6+4+2;
+    
+    A_3(B1,D2)    =6+4+2;
+    
+    A_3(C1,D2)    =4+2;
+    
+    A_3(D1,D2)    =2;
+    
+    A_3(D2,E2)    =4+6+3+5+2;
+    A_3(D2,A22)   =4+6+7+2;
+    
+    A_3(C2,A22)   =6+7+2;
+    A_3(C2,E2)    =6+5+5+2;
+    
+    A_3(B2,A22)   =7+2;
+    A_3(B2,E2)    =5+5+2;
+    
+    A_3(A2,A22)   =2;
+    
+    A_3(A22,A1)   =0;
+    
+    // bloucle noire
+    A_3(E2,G1)    =5+5+2+2;
+    A_3(E2,A22)   =5+5+7+2;
+    A_3(E2,E2)    =5+5+5+5+2;
+    
+    A_3(F2,G1)    =5+2+2;
+    A_3(F2,A22)   =5+7+2;
+    A_3(F2,E2)    =5+5+5+2;//
+    
+    A_3(B22,G1)   =2+2;
+    A_3(B22,A22)  =7+2;
+    A_3(B22,E2)   =5+5+2;//
+    
+    A_3(G2,G1)    =2;
+    A_3(G1,E2)    =2+5+5+2;
+    
+    A_3(B12,E2)   =5+5+2;
+    
+    A_3(F1,E2)    =5+2;
+    A_3(E1,E2)    =2;
+    
+  // valeur propre
+  T3_cycle = karp(A_3)
+[Val3_prop,Vect3_prop,p,c,n]=howard(A_3)    
+

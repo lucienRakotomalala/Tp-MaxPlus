@@ -263,7 +263,7 @@ Nous ajoutons donc un jeton en $p8$ sur la figure \ref{fig:get_train}. Cela donn
 \caption{\label{fig:get_train_decompo2} Graphe des Événements Temporisé décomposé du réseau de transport avec l'ajout d'un nouveau train.}
 \end{figure}
 
-Afin de recalculer une nouvelle matrice dynamique $A2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
+Afin de recalculer une nouvelle matrice dynamique $A_2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
 
 Voici les nouvelles équations d'état :
 \begin{equation}
@@ -293,12 +293,12 @@ x_{E2}(k) &=&	5x_{F2}(k)   \\
 \right. 
 \end{equation}
 La définition de $x_{F1}(k)$ est maintenant exprimée à partir de $x_{E12}(k)$ et celle de $x_{E12}(k)$ à partir de $x_{E1}(k)$, le reste est identique.
-La dimension de $A2$ est donc agrandie d'un état par rapport a celle de $A$.
+La dimension de $A_2$ est donc agrandie d'un état par rapport a celle de $A$.
 
 Par le même type d'opérations que précédemment nous avons calculé des expressions en fonction de $k-1$.
-Voici la matrice dynamique $A2$ de notre système avec un train de plus :
+Voici la matrice dynamique $A_2$ de notre système avec un train de plus :
 \begin{equation}
-A2 = \left(\begin{array}{cccccccccccccccccc}
+A_2 = \left(\begin{array}{cccccccccccccccccc}
 . & . & . & . & 19 & . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
 . & . & . & . & 12 & . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
 . & . & . & . & 6 &  . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
@@ -324,7 +324,61 @@ Le nouveau temps de cycle, qui est la valeur propre, vaut $ 12.6666...$. Nous po
 
 \subsection{Travaux sur la ligne B-F}
 Le temps de trajet entre les gares B et F fait maintenant $5$ u.t à cause de travaux.
+Nous allons, dans un premier temps, ré exprimer la matrice dynamique du système $A_3$ à partir du système initial (c'est-à-dire sans l'ajout de train). Dans un second temps nous allons étudier l'influence cette modification.
+Nous allons utiliser modifier le GET avec l'ajout d'état de la figure \ref{fig:get_train_decompo} afin de former un nouveau GET. Celui-ci est représenter figure \ref{fig:get_train_decompoRetard}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .8\textwidth]{./I/images/train_decomposeRetard.pdf}
+\caption{\label{fig:get_train_decompoRetard} Graphe des Événements Temporisé décomposé du réseau de transport avec retard sur la voie B-F.}
+\end{figure}
 
-Nous allons, dans un premier temps ré exprimer la matrice dynamique du système $A3$.
+\begin{equation}
+\label{equ:ee2}
+\left\lbrace
+\begin{array}{l c l}
+x_{A1}(k) &=&	7x_{B1}(k)\\ 
+x_{B1}(k) &=&	6x_{C1}(k)\\
+x_{C1}(k) &=& 	4x_{D1}(k)\\
+x_{D1}(k) &=&	2x_{D2}(k-1)\\
+x_{D2}(k) &=&	4x_{C2}(k)\\
+x_{C2}(k) &=&	6x_{B2}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}(k)\\
+x_{A2}(k) &=&	2x_{A22}(k-1)\\
+x_{A22}(k) &=&	x_{A1}(k-1)\\
+x_{E1}(k) &=&	2x_{E2}(k-1)\\
+x_{F1}(k) &=&	5x_{E1}(k)\\
+x_{B12}(k) &=&	5x_{F1}(k)\\
+x_{G1}(k) &=&	2x_{B12}(k)\\
+x_{G2}(k) &=&	2x_{G1}(k-1)\\
+x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
+x_{F2}(k) &=&	5x_{B22}(k)\\
+x_{E2}(k) &=&	5x_{F2}(k)   \\  
+\end{array}
+\right. 
+\end{equation}
+Comme précédemment, nous avons créé la matrice $A_3$.
+\begin{equation}
+A_3 = \left(\begin{array}{ccccccccccccccccc}
+. & . & . & . & 19 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
+. & . & . & . & 12 & . & . & . & . &  . & . & . & . &  . & . & . & .  \\
+. & . & . & . & 6 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
+. & . & . & . & 2 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
+. & . & . & . & . &  . & . & . & 19 & . & . & . & . &  . & . & . & 20  \\
+. & . & . & . & . &  . & . & . & 15 & . & . & . & . &  . & . & . & 18  \\
+. & . & . & . & . &  . & . & . & 9 &  . & . & . & . &  . & . & . & 12  \\
+. & . & . & . & . &  . & . & . & 2 &  . & . & . & . &  . & . & . & .  \\
+0 & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
+. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 2  \\
+. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 7  \\
+. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 12  \\
+. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 14  \\
+. & . & . & . & . &  . & . & . & . &  . & . & . & 2 &  . & . & . & .  \\
+. & . & . & . & . &  . & . & . & 9 &  . & . & . & 4 &  . & . & . & 12  \\
+. & . & . & . & . &  . & . & . & 14 & . & . & . & 9 &  . & . & . & 17  \\
+. & . & . & . & . &  . & . & . & 19 & . & . & . & 14 & . & . & . & 22 
+\end{array}\right)
+\end{equation}
+($.$ signifie $\epsilon$)
 
+Cette modification modifie le temps de cycle à $22$. Il est de $22,22..\%$ plus long. Il est logique que la modification de cette ligne impacte directement le temps de cycle car il affecte directement le cycle le plus long.
 
