@@ -34,7 +34,7 @@ Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du
 
 \includegraphics[width = \textwidth]{./II/images/GET.pdf}
 \captionof{figure}{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
-
+Pour continuer l'analyse du système et prouver son fonctionnement, nous allons modéliser les 4 ordonnancement possible. A partir des modèles obtenu, nous étudierons avec l'algèbre (max,+) les temps de cycle maximum. Nous effectuerons les calculs grâce à l'outil informatique \emph{ScicosLab}.
 \subsection{Ordonnancement 1}\label{sub:ordo1}
 
 Nous modélisons maintenant le cas du premier ordonnancement possible décrit rapidement en \ref{item:o1}. Dans ce cycle, la pièce $A$ doit d'abord passer sur la machine $M_2$ puis prendre la machine $M_1$. Ensuite c'est au tour de la pièce $B$ de prendre les machines $M_1$ puis $M_2$. 
@@ -86,7 +86,7 @@ x_{BM_1}(k-1)\\
 x_{BM_2}(k-1)
 \end{pmatrix}
 \end{align*}
-
+Ce système d'équation n'est pas utilisable tel quel, nous allons continuer la factorisation pour obtenir une forme du type :$X(k)=f(X(k-1))$. Finalement, il vient en insérant les éléments en $k-1$ dans les éléments en $k$ : 
 \begin{align*}
 \left\lbrace
 \begin{array}{lcl}
@@ -96,19 +96,20 @@ x_{BM_1}(k)&=& 11x_{BM_1}(k-1) \oplus 14x_{AM_1}(k-1) \oplus 13x_{BM_2}(k-1)\\
 x_{BM_2}(k)&=& 20x_{BM_2}(k-1) \oplus 21x_{AM_1}(k-1) \oplus 18x_{BM_1}(k-1)\\
 \end{array}
 \right.
-\end{align*}où les $x_i(k)$ représentent le prochain tir de la transition $i$. On peut alors factoriser notre système d'équation avec :
+\end{align*}
+d'où :
 \begin{align}\label{equ:ordo1}
 X(k) = \begin{pmatrix}
 x_{AM1}(k) \\ x_{AM2}(k) \\ x_{BM1}(k)\\ x_{BM2}(k)
 \end{pmatrix} 
 = \begin{pmatrix}
-10 & \epsilon & 7 &9\\
-4 & \epsilon & \epsilon & 3\\
-14 & \epsilon & 11 & 13\\
-21 & \epsilon & 18 & 20
+10 & . & 7 &9\\
+4 & . & . & 3\\
+14 & . & 11 & 13\\
+21 & . & 18 & 20
 \end{pmatrix}X(k-1) = A_1X(k-1)
 \end{align}
-Nous obtenons avec ScicosLab et la fonction \emph{karp} le résultat suivant : \begin{eqnarray*}
+Il est maintenant possible d'étudier le temps de cycle de notre système grâce à l'algèbre (max,+) avec le calcul de la ou les valeur(s) propres. Nous ne sommes pas déterministe sur le nombre de valeurs propres de la matrice d'évolution car ce système n'est pas irréductible. Nous obtenons avec \emph{ScicosLab} et la fonction \emph{karp} le résultat suivant : \begin{eqnarray*}
 \lambda(A_1) = 20
 \end{eqnarray*}
 Ce temps de cycle maximal correspond à la somme des temps de traitement de toute les machines. Il était possible de prévoir ce résultat car l'ordonnancement n'est pas optimal, les machines passent du temps en étant inactive. Nous verrons qu'un meilleur ordonnancement est possible dans la suite de ce rapport.
@@ -140,10 +141,10 @@ x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1)\\
 Ce système d'équation du GET peut être représenté sous forme espace d'état avec le même vecteur que d'état que dans \ref{equ:ordo1}. Nous obtenons :
 \begin{align}\label{eqn:eeOrdo3}
 X(k) = \begin{pmatrix}
-10 & \epsilon &\epsilon & 9\\
-4 &\epsilon &\epsilon & 3\\
-4 &\epsilon &\epsilon & 3\\
-11 &\epsilon &\epsilon & 10\\
+10 & . &. & 9\\
+4 &. &. & 3\\
+4 &. &. & 3\\
+11 &. &. & 10\\
 \end{pmatrix}X(k-1) = A_2X(k-1)
 \end{align} 
 Comme pour l'ordonnancement précédent, nous calculons la valeurs propres du système pour le temps de cycle : 
@@ -169,9 +170,9 @@ x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1) \oplus  6x_{AM2}(k-1)\\
 \end{align*}
 \begin{align}\label{eqn::ee_Ordo4}
 X(k) = \begin{pmatrix}
-20&15&\epsilon&19\\
-14&8&\epsilon&13\\
-4&\epsilon&\epsilon&3\\
-11&6&\epsilon&10
+20&15&.&19\\
+14&8&.&13\\
+4&.&.&3\\
+11&6&.&10
 \end{pmatrix}X(k-1) = A_3X(k-1)
 \end{align}
