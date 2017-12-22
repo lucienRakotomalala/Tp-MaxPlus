@@ -1,11 +1,13 @@
 clear all
 close 
-/// BE de controle et simulation 
+// UPS - M2 ISTR- Decembre 2017
+// Lucien RAKOTOMALALA & David TOCAVEN
+// BE de controle et simulation - Partie I
 
-// Exercice 1
-//      1  2  3  4  5  6  7  8  9  10  11 12 13  14 15 16  17 
-// X = [A1 B1 C1 D1 D2 C2 B2 A2 A22 E1 F1 B12 G1 G2 B22 F2 E2]
-// indices Etat
+// Indices des etats
+// Indices =  1  2  3  4  5  6  7  8  9  10  11 12 13  14 15 16  17 
+//   X     = [A1 B1 C1 D1 D2 C2 B2 A2 A22 E1 F1 B12 G1 G2 B22 F2 E2]
+
 A1  =1;
 B1  =2;
 C1  =3;
@@ -24,7 +26,7 @@ B22 =15;
 F2  =16;
 E2  =17;
 
-// matrice dynamique
+// Matrice dynamique
 
 A =full(%zeros(17,17)); 
     // boucle bleu
@@ -70,10 +72,11 @@ A =full(%zeros(17,17));
     A(F1,E2)    =5+2;
     A(E1,E2)    =2;
 
-// valeur propre    
-karp(A) // = 18
-naiveeigenv(A) // = 18
-
+// Vecteur propre & Valeur(s) propre(s)   
+[Vect_prop, Val_prop]= eigenspace(A); 
+// Val_prop = 18
+// Vect_prop = [ 3 ; -4 ; -10 ; -14 ; 2 ; -2 ; -8 ; -31; -15 ; ...
+//              -16 ; -11 ; -8 ; -6 ; -22 ; -10 ; -7 ; 0  ]
 // vecteur d'état initial
 X0 = full(%zeros(17,1));
     X0(A2)= 3;
