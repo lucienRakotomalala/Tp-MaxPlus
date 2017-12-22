@@ -1,15 +1,25 @@
 \chapter{Étude d'un système de transport}
-Dans cette première partie, nous allons vous présenter nos travaux sur l'étude d'un système de transport. Dans ce problème, il nous est demandé de mettre en œuvre, avec l'algèbre $(max,+)$, une étude d'un système de Graphe d'Évènements Temporisé (GET) qui représentera notre système temporisé de transport. Nous commencerons par modéliser le procédé en GET et vous le présenter, nous effectuerons ensuite une analyse de ce système enfin essayer d'améliorer le système en modifiant ou ajoutant des éléments au réseau à partir de conclusion tirée sur la modélisation.
+Dans cette première partie, nous allons vous présenter nos travaux sur l'étude d'un système de transport. Dans ce problème, il nous est demandé de mettre en œuvre, avec l'algèbre $(max,+)$, une étude d'un système de Graphe d'Évènements Temporisé (GET) qui représentera notre système temporisé de transport. Nous commencerons par modéliser le procédé en GET et vous le présenter, nous effectuerons ensuite une analyse de ce système enfin essayer d'améliorer le système en modifiant ajoutant des éléments au réseau à partir de conclusion tirée sur la modélisation.
 
-\section{Modélisation :}
-\subsection{Modélisation brute}
-Dans un premier temps, nous avons réalisé le GET (voir figure \ref{fig:get_train}). Ce graphe représente les différentes gares, un couple de transition $(x \theta1,x\theta2)$ représente la gare $\theta$, la première représente "le train rentre en gare", le $t_a$ de la place suivante le temps d'attente en gare, et la seconde transition ($x\theta2$) "le train sort de la gare". Les $ta$ des places entre deux arrivées ou départs de gare représentent le temps de trajet sur une ligne de train. Les places $xB12$ et $xB22$ sont des copies  de $xB1$ et $xB2$ afin de représenter les contraintes de synchronisation décritent dans l'énoncé.
-
+\section{Graphes d'évènements temporisés}
+Dans un premier temps, nous avons réalisé le graph des événements temporisés (voir figure \ref{fig:get_train}). Ce graph représente les différentes gares, un couple de transition $(x \theta1,x\theta2)$ représente la gare $\theta$, la première représente "le train rentre en gare", le $t_a$ de la place suivante le temps d'attente en gare, et la seconde transition ($x\theta2$) "le train sort de la gare". Les $ta$ des places entre deux entrées ou sorties de gare représentent le temps de trajet sur une ligne de train. Les places $xB12$ et $xB22$ sont des copies  de $xB1$ et $xB2$ afin de représenter les contraintes de synchronisation décritent dans l'énoncé.
+Afin de permettre une mise en représentation qui suivra, nous avons décomposé la place $p0$ et la transition $xA2$ en deux places $p0$ et $p18$ et deux transitions $xA2$ et $xA22$. Nous avons réparti les jetons sur les deux places. Cela nous permettra de décrire les places suivantes avec un état de plus et mais uniquement par rapport à un événement précédent ("$x(k)=Yx(k-1)$") et non deux ("$x(k)=Yx(k-2)$").
+Voici la nouvelle représentation d'état correspondant à cette contrainte, figure \ref{fig:get_train_decompo}.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width =.8 \textwidth]{./I/images/train.pdf}
 \caption{\label{fig:get_train} Graphe des Événements Temporisé du réseau de transport}
 \end{figure}
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .8\textwidth]{./I/images/train_decompose.pdf}
+\caption{\label{fig:get_train_decompo} Graphe des Événements Temporisé décomposé du réseau de transport }
+\end{figure}
+\section{Analyse, matrice d'évolution et valeurs propres}
+Nous abordons ici, dans l'ordre, la mise en représentation d'état du réseau de transport, l'analyse de réductibilité et le calcul des valeurs et vecteurs propres. 
+\subsection{Représentation d'état}
 Afin de réaliser la mise en représentation d'état, nous avons extrait les égalisés suivantes :
 \begin{equation}
 \label{equ:ee1}
@@ -21,7 +31,7 @@ x_{C1}(k) &=& 	4x_{D1}(k)\\
 x_{D1}(k) &=&	2x_{D2}(k-1)\\
 x_{D2}(k) &=&	4x_{C2}(k)\\
 x_{C2}(k) &=&	6x_{B2}(k)\\
-x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
 x_{A2}(k) &=&	2x_{A1}(k-2)\\
 x_{E1}(k) &=&	2x_{E2}(k-1)\\
 x_{F1}(k) &=&	5x_{E1}(k)\\
@@ -34,30 +44,9 @@ x_{E2}(k) &=&	5x_{F2}(k)   \\
 \end{array}
 \right. 
 \end{equation}
-
-Nous souhaitons effectuer une représentation en espace d'état, c'est-à-dire de la forme :
+Comme nous avons une expression dépendant de $k$, $k-1$ et $k-2$, nous avons créé un état intermédiaire (voir figure \ref{fig:get_train_decompo}) $x_{A22}(k)$ afin d'avoir des expressions en fonction de $k$ et $k-1$.
+%% A FINIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 \begin{equation}
-\label{equ:eeRef}
-\left\lbrace\begin{array}{lcl}
-	x(k) &=& A \cdot x(k-1) + B u(k)\\
-	y(k) &=& C \cdot x(k)
-\end{array}\right.
-\end{equation}
-Nous remarquons dans le système d'équations précédent (équation \ref{equ:ee1}), que les expressions dépendent de $k$, $k-1$ et $k-2$. Il est donc nécessaire d'effectuer une transformation afin d'avoir des expressions dépendant uniquement de $k$ et $k-1$.
-\subsection{Ajout d'un état}
-Afin de permettre une mise en représentation qui suivra, nous avons décomposé la place $p0$ et la transition $xA2$ en deux places $p0$ et $p18$ et deux transitions $xA2$ et $xA22$. Nous avons réparti les jetons sur les deux places. Ce nouvel état intermédiaire $x_{A22}(k)$ (voir figure \ref{fig:get_train_decompo}) nous permettra d'avoir des expressions uniquement en fonction de $k$ et $k-1$.
-Voici, figure \ref{fig:get_train_decompo}, le GET équivalent.
-
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[width = .8\textwidth]{./I/images/train_decompose.pdf}
-\caption{\label{fig:get_train_decompo} Graphe des Événements Temporisé décomposé du réseau de transport }
-\end{figure}
-
-Et voici, équation \ref{equ:ee2}, le système d'équations correspondant.
-\begin{equation}
-\label{equ:ee2}
 \left\lbrace
 \begin{array}{l c l}
 x_{A1}(k) &=&	7x_{B1}(k)\\ 
@@ -66,7 +55,7 @@ x_{C1}(k) &=& 	4x_{D1}(k)\\
 x_{D1}(k) &=&	2x_{D2}(k-1)\\
 x_{D2}(k) &=&	4x_{C2}(k)\\
 x_{C2}(k) &=&	6x_{B2}(k)\\
-x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
 x_{A2}(k) &=&	2x_{A22}(k-1)\\
 x_{A22}(k) &=&	x_{A1}(k-1)\\
 x_{E1}(k) &=&	2x_{E2}(k-1)\\
@@ -79,21 +68,16 @@ x_{F2}(k) &=&	3x_{B22}(k)\\
 x_{E2}(k) &=&	5x_{F2}(k)   \\  
 \end{array}
 \right. 
-\end{equation}
-
-\subsection{Modélisation en espace d'état}
-Nous avons ré exprimer le système d'équations précédent (équation \ref{equ:ee2}) de façon à avoir une expression facilitant la mise en espace d'état.
-\begin{equation}
-\label{equ:ee3}
+\Leftrightarrow
 \left\lbrace
 \begin{array}{l c l}
 x_{A1}(k) &=&	(7+6+4+2)x_{D2}(k-1)\\ 
 x_{B1}(k) &=&	(6+4+2)x_{D2}(k-1)\\
 x_{C1}(k) &=& 	(4+2)x_{D2}(k-1)\\
 x_{D1}(k) &=&	2x_{D2}(k-1)\\
-x_{D2}(k) &=&	(4+6+7+2)x_{A22}(k-1) \oplus  (4+6+3+5+2)x_{E2}(k-1)\\
-x_{C2}(k) &=&	(6+7+2)x_{A22}(k-1) \oplus  (6+3+5+2)x_{E2}(k-1)\\
-x_{B2}(k) &=&	(7+2)x_{A22}(k-1) \oplus  (3+5+2)x_{E2}(k-1)\\
+x_{D2}(k) &=&	(4+6+7+2)x_{A22}(k) \oplus  (4+6+3+5+2)x_{E2}(k-1)\\
+x_{C2}(k) &=&	(6+7+2)x_{A22}(k) \oplus  (6+3+5+2)x_{E2}(k-1)\\
+x_{B2}(k) &=&	(7+2)x_{A22}(k) \oplus  (3+5+2)x_{E2}(k-1)\\
 x_{A2}(k) &=&	2x_{A22}(k-1)\\
 x_{A22}(k) &=&	x_{A1}(k-1)\\
 x_{E1}(k) &=&	2x_{E2}(k-1)\\
@@ -101,20 +85,26 @@ x_{F1}(k) &=&	(5+2)x_{E2}(k-1)\\
 x_{B12}(k) &=&	(3+5+2)x_{E2}(k-1)\\
 x_{G1}(k) &=&	(2+3+5+2)x_{E2}(k-1)\\
 x_{G2}(k) &=&	2x_{G1}(k-1)\\
-x_{B22}(k) &=&	(2+2)x_{G1}(k-1) \oplus (7+2)x_{A22}(k-1) \oplus  (3+5+2)x_{E2}(k-1)\\
-x_{F2}(k) &=&	(3+2+2)x_{G1}(k-1) \oplus (3+7+2)x_{A22}(k-1) \oplus  (3+3+5+2)x_{E2}(k-1)\\
-x_{E2}(k) &=&	(5+3+2+2)x_{G1}(k-1) \oplus (5+3+7+2)x_{A22}(k-1) \oplus  (5+3+3+5+2)x_{E2}(k-1)   \\  
+x_{B22}(k) &=&	(2+2)x_{G1}(k-1) \oplus (7+2)x_{A22}(k) \oplus  (3+5+2)x_{E2}(k-1)\\
+x_{F2}(k) &=&	(3+2+2)x_{G1}(k-1) \oplus (3+7+2)x_{A22}(k) \oplus  (3+3+5+2)x_{E2}(k-1)\\
+x_{E2}(k) &=&	(5+3+2+2)x_{G1}(k-1) \oplus (5+3+7+2)x_{A22}(k) \oplus  (5+3+3+5+2)x_{E2}(k-1)   \\  
 \end{array}
 \right. 
 \end{equation}
-Les expressions dépendent uniquement de $k-1$.
-
-
-
-On peut remarquer que notre système est autonome, c'est-à-dire qu'il ne présente pas d'entrée ou de sortie. 
-Dans l'espace d'état de référence, équation \ref{equ:eeRef}, les matrices $B$ et $C$ ne sont donc pas nécessaires.
-
-Le système d'équation de l'équation \ref{equ:ee3} nous ont permis de créer la matrice dynamique suivante : 
+On peut remarquer que notre système est autonome, c'est-à-dire qu'il ne présente pas d'entrée ou de sortie 
+dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessaires.
+\begin{equation}
+\left\lbrace
+\begin{array}{lcl}
+	x(k) &=& A_0 \cdot x(k) + A_1 \cdot x(k-1) + B u(k)\\
+	y(k) &=& C \cdot x(k)
+\end{array}
+\right. \Rightarrow
+\left\lbrace\begin{array}{lcl}
+	x(k) &=& A \cdot x(k-1)
+\end{array}\right.
+\end{equation}
+Ces égalités nous ont permis de créer la matrice dynamique suivante : 
 \begin{equation}
 A = \left(\begin{array}{ccccccccccccccccc}
 .&.&.&.&19&.&.&.&.& .&.&.&.& .&.&.&. \\
@@ -131,15 +121,12 @@ A = \left(\begin{array}{ccccccccccccccccc}
 .&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&10\\
 .&.&.&.&.& .&.&.&.& .&.&.&.& .&.&.&12\\
 .&.&.&.&.& .&.&.&.& .&.&.&2& .&.&.&. \\
-.&.&.&.&.& .&.&.&9& .&.&.&4& .&.&.&10 \\
-.&.&.&.&.& .&.&.&12&.&.&.&7& .&.&.&13\\
+.&.&.&.&.& .&.&.&9& .&.&.&4& .&.&.&8 \\
+.&.&.&.&.& .&.&.&12&.&.&.&7& .&.&.&11\\
 .&.&.&.&.& .&.&.&17&.&.&.&12&.&.&.&18
 \end{array}\right)
 \end{equation}
 ($.$ signifie $\epsilon$)
-\section{Analyse, matrice d'évolution et valeurs propres}
-Nous abordons ici, dans l'ordre, l'analyse de réductibilité et le calcul des valeurs et vecteurs propres. 
-
 \subsection{Irréductibilité}
 Maintenant que nous avons une représentation d'état de notre procédé, nous allons étudier s'il est irréductible ou non, si c'est le cas, cela signifie qu'il a une unique valeur propre (c'est une implication et non une équivalence). Une des méthodes de vérification de la propriété d'irréductibilité d'une matrice est de vérifier si elle comporte une ligne ou une colonnes d'éléments neutres ($\epsilon$).
 Nous pouvons voir ici que la matrice A comporte au moins 12 colonnes d'éléments neutres, elle est donc réductible. Une des autres façon est de voir si le graphe des marquages accessible est fortement connexe ou non. Si il n'est, elle est irréductible. Figure \ref{fig:gma_train}, on peut voir que ce n'est pas le cas les états 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, 15 et 16 sont des états puits.
@@ -156,7 +143,7 @@ Comme précédemment, nous avons utilité ScicosLab pour calculer le vecteur pro
 vecteur_{propre} = 
 \left[
 \begin{array}{ccccccccccccccccc}
-21 & 14 & 8 & 4 & 20 & 16 & 10 & -13 & 3 & 2 & 7 & 10 & 12 & -4 & 10 & 13 & 18	
+21 & 14 & 8 & 4 & 20 & 16 & 10 & -13 & 3 & 2 & 7 & 10 & 12 & -4 & 8 & 11 & 18	
 \end{array} \right]^T
 \end{equation}
 
@@ -205,7 +192,7 @@ Ensuite, nous avons initialisé la première colonne avec le vecteur d'état ini
 
 Les dates de départs correspondants aux trains arrivants en C et venant de B sont ceux  de la ligne 7 de $X$ :
 \begin{equation}
-L_7(X)= \begin{bmatrix} 10&28&46&64&82&100&118&136&154&172 \end{bmatrix}
+L_7(X)= \begin{bmatrix} 11&29&47&65&83&101&119&137&155&173 \end{bmatrix}
 \end{equation}
 
 
@@ -236,8 +223,8 @@ Nous avons décidé d'étudier la différence suivante $\Delta_{cy} = X_i - X_{i
 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
 7 &  18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
-18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
-18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+16 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+16 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 
 \end{array}
 \right)
@@ -263,122 +250,39 @@ Nous ajoutons donc un jeton en $p8$ sur la figure \ref{fig:get_train}. Cela donn
 \caption{\label{fig:get_train_decompo2} Graphe des Événements Temporisé décomposé du réseau de transport avec l'ajout d'un nouveau train.}
 \end{figure}
 
-Afin de recalculer une nouvelle matrice dynamique $A_2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
+Afin de recalculer une nouvelle matrice dynamique $A2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
 
 Voici les nouvelles équations d'état :
 \begin{equation}
-\label{equ:ee4}
+\label{equ:ee1}
 \left\lbrace
 \begin{array}{l c l}
 x_{A1}(k) &=&	7x_{B1}(k)\\ 
 x_{B1}(k) &=&	6x_{C1}(k)\\
-x_{C1}(k) &=& 	4x_{D1}(k)\\
 x_{D1}(k) &=&	2x_{D2}(k-1)\\
 x_{D2}(k) &=&	4x_{C2}(k)\\
-x_{C2}(k) &=&	6x_{B2}(k)\\
-x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}(k)\\
-x_{A2}(k) &=&	2x_{A22}(k-1)\\
+x_{C2}(k) &=&	6x_{B1}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
+x_{A2}(k) &=&	2x_{A1}(k-2)\\
 x_{A22}(k) &=&	x_{A1}(k-1)\\
-%
-x_{E1}(k) &=&	2x_{E12}(k-1)\\
-x_{E12}(k) &=&	x_{E2}(k-1)\\
-x_{F1}(k) &=&	5x_{E1}(k)\\
+x_{E1}(k) &=&	2x_{E2}(k-1)\\
+x_{F1}(k) &=&	5x_{E12}(k)\\
 x_{B12}(k) &=&	3x_{F1}(k)\\
 x_{G1}(k) &=&	2x_{B12}(k)\\
 x_{G2}(k) &=&	2x_{G1}(k-1)\\
 x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
 x_{F2}(k) &=&	3x_{B22}(k)\\
 x_{E2}(k) &=&	5x_{F2}(k)   \\  
+x_{E12}(k) &=&	x_{E1}(k-1)   \\  
 \end{array}
-\right. 
+\right.
 \end{equation}
 La définition de $x_{F1}(k)$ est maintenant exprimée à partir de $x_{E12}(k)$ et celle de $x_{E12}(k)$ à partir de $x_{E1}(k)$, le reste est identique.
-La dimension de $A_2$ est donc agrandie d'un état par rapport a celle de $A$.
+La dimension de $A2$ est donc agrandie d'un état par rapport a celle de $A$.
 
-Par le même type d'opérations que précédemment nous avons calculé des expressions en fonction de $k-1$.
-Voici la matrice dynamique $A_2$ de notre système avec un train de plus :
-\begin{equation}
-A_2 = \left(\begin{array}{cccccccccccccccccc}
-. & . & . & . & 19 & . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
-. & . & . & . & 12 & . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
-. & . & . & . & 6 &  . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
-. & . & . & . & 2 &  . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
-. & . & . & . & . &  . & . & . & 19 & . & . & . & . &  . & . & . & . & 20  \\
-. & . & . & . & . &  . & . & . & 15 & . & . & . & . &  . & . & . & . & 16  \\
-. & . & . & . & . &  . & . & . & 9 &  . & . & . & . &  . & . & . & . & 10  \\
-. & . & . & . & . &  . & . & . & 2 &  . & . & . & . &  . & . & . & . & .  \\
-0 & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & . & .  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & . & 2  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & . & 7  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & . & 10  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & . & 12  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & 2 &  . & . & . & . & .  \\
-. & . & . & . & . &  . & . & . & 9 &  . & . & . & 4 &  . & . & . & . & 10  \\
-. & . & . & . & . &  . & . & . & 12 & . & . & . & 7 &  . & . & . & . & 13  \\
-. & . & . & . & . &  . & . & . & 17 & . & . & . & 12 & . & . & . & . & 18  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 0 & .      
-\end{array}\right)
-\end{equation}
-($.$ signifie $\epsilon$)
-Le nouveau temps de cycle, qui est la valeur propre, vaut $ 12.6666...$. Nous pouvons constater un amélioration d'environ $30\%$ du temps de cycle par l'ajout d'un train initialement placé en gare E.
 
-\subsection{Travaux sur la ligne B-F}
-Le temps de trajet entre les gares B et F fait maintenant $5$ u.t à cause de travaux.
-Nous allons, dans un premier temps, ré exprimer la matrice dynamique du système $A_3$ à partir du système initial (c'est-à-dire sans l'ajout de train). Dans un second temps nous allons étudier l'influence cette modification.
-Nous allons utiliser modifier le GET avec l'ajout d'état de la figure \ref{fig:get_train_decompo} afin de former un nouveau GET. Celui-ci est représenter figure \ref{fig:get_train_decompoRetard}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width = .8\textwidth]{./I/images/train_decomposeRetard.pdf}
-\caption{\label{fig:get_train_decompoRetard} Graphe des Événements Temporisé décomposé du réseau de transport avec retard sur la voie B-F.}
-\end{figure}
+Voici la matrice dynamique $A2$ de notre système avec un train de plus :
 
-\begin{equation}
-\label{equ:ee2}
-\left\lbrace
-\begin{array}{l c l}
-x_{A1}(k) &=&	7x_{B1}(k)\\ 
-x_{B1}(k) &=&	6x_{C1}(k)\\
-x_{C1}(k) &=& 	4x_{D1}(k)\\
-x_{D1}(k) &=&	2x_{D2}(k-1)\\
-x_{D2}(k) &=&	4x_{C2}(k)\\
-x_{C2}(k) &=&	6x_{B2}(k)\\
-x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}(k)\\
-x_{A2}(k) &=&	2x_{A22}(k-1)\\
-x_{A22}(k) &=&	x_{A1}(k-1)\\
-x_{E1}(k) &=&	2x_{E2}(k-1)\\
-x_{F1}(k) &=&	5x_{E1}(k)\\
-x_{B12}(k) &=&	5x_{F1}(k)\\
-x_{G1}(k) &=&	2x_{B12}(k)\\
-x_{G2}(k) &=&	2x_{G1}(k-1)\\
-x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
-x_{F2}(k) &=&	5x_{B22}(k)\\
-x_{E2}(k) &=&	5x_{F2}(k)   \\  
-\end{array}
-\right. 
-\end{equation}
-Comme précédemment, nous avons créé la matrice $A_3$.
-\begin{equation}
-A_3 = \left(\begin{array}{ccccccccccccccccc}
-. & . & . & . & 19 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
-. & . & . & . & 12 & . & . & . & . &  . & . & . & . &  . & . & . & .  \\
-. & . & . & . & 6 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
-. & . & . & . & 2 &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
-. & . & . & . & . &  . & . & . & 19 & . & . & . & . &  . & . & . & 20  \\
-. & . & . & . & . &  . & . & . & 15 & . & . & . & . &  . & . & . & 18  \\
-. & . & . & . & . &  . & . & . & 9 &  . & . & . & . &  . & . & . & 12  \\
-. & . & . & . & . &  . & . & . & 2 &  . & . & . & . &  . & . & . & .  \\
-0 & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & .  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 2  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 7  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 12  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & . &  . & . & . & 14  \\
-. & . & . & . & . &  . & . & . & . &  . & . & . & 2 &  . & . & . & .  \\
-. & . & . & . & . &  . & . & . & 9 &  . & . & . & 4 &  . & . & . & 12  \\
-. & . & . & . & . &  . & . & . & 14 & . & . & . & 9 &  . & . & . & 17  \\
-. & . & . & . & . &  . & . & . & 19 & . & . & . & 14 & . & . & . & 22 
-\end{array}\right)
-\end{equation}
-($.$ signifie $\epsilon$)
 
-Cette modification modifie le temps de cycle à $22$. Il est de $22,22..\%$ plus long. Il est logique que la modification de cette ligne impacte directement le temps de cycle car il affecte directement le cycle le plus long.
+
 
