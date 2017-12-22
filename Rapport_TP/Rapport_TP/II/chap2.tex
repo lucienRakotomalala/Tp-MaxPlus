@@ -32,11 +32,16 @@ Dans un premier temps, nous avons réalisé le graphe des événements temporis�
 
 Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du graph, elles font offices de légendes pour la couleurs des éléments du graph.
 
-\includegraphics[width = \textwidth]{./II/images/GET.pdf}
-\captionof{figure}{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
-Pour continuer l'analyse du système et prouver son fonctionnement, nous allons modéliser les 4 ordonnancement possible. A partir des modèles obtenu, nous étudierons avec l'algèbre (max,+) les temps de cycle maximum. Nous effectuerons les calculs grâce à l'outil informatique \emph{ScicosLab}.
-\subsection{Ordonnancement 1}\label{sub:ordo1}
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .75\textwidth]{./II/images/GET.pdf}
+\caption{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
+\end{figure}
 
+Pour continuer l'analyse du système et prouver son fonctionnement, nous allons modéliser les 4 ordonnancement possible. A partir des modèles obtenu, nous étudierons avec l'algèbre (max,+) les temps de cycle maximum. Nous effectuerons les calculs grâce à l'outil informatique \emph{ScicosLab}.
+
+La modélisation des 4 ordonnancements doit donc permettre au système d'effectuer une liste d'action bien précise. Pour cela, nous avons à notre disposition le placement de 4 jetons, car chaque élément du système, qu'il soit une pièce ou une machine, possède un jetons pour indiquer dans quelle position il se trouve.
+\subsection{Ordonnancement 1}\label{sub:ordo1}
 Nous modélisons maintenant le cas du premier ordonnancement possible décrit rapidement en \ref{item:o1}. Dans ce cycle, la pièce $A$ doit d'abord passer sur la machine $M_2$ puis prendre la machine $M_1$. Ensuite c'est au tour de la pièce $B$ de prendre les machines $M_1$ puis $M_2$. 
 
 Pour que la pièce $A$ occupe la première utilisation de $M_2$, nous devons placer le marquage initial dans les places $p4$ et $p2$ pour sensibiliser la transition $x_{AM2}$ et ainsi modéliser l'entrer de $A$ dans la machine 2. On souhaite aussi que $A$ utilise la machine 1 avant $B$, donc on empêche la sensibilisation de $x_{BM1}$ en ne mettant pas de jeton dans la place $p1$ mais en plaçant un jeton dans la place $p0$. Pour que la pièce $B$ commence par la machine $M_1$, i.e $x_{BM1}$, nous plaçons un jeton dans la place $p7$. 
@@ -153,11 +158,14 @@ Comme pour l'ordonnancement précédent, nous calculons la valeurs propres du sy
 \end{eqnarray*}
 Ce cycle maximal correspond à l'usinage de la machine $M_1$ pour les deux pièces. Il s'agit du cycle le plus long, cycle de $A$ = cycle de $B$ = 10 et le cycle de $M_2$ = 9. Cet ordonnancement est le plus optimal, $M_1$ ne va jamais s'arrêter car c'est elle même qui ralentir le système. 
 \subsection{Ordonnancement 4}
+Cette mise en place des usinages est l'opposé de l'ordonnancement 1. Nous avons ici la pièce $B$ qui doit passer sur $M_1$ puis $M_2$, ce qui débloquera $A$ pour qu'elle puisse être traité par $M_2$ puis $M_1$. Les 4 jetons que nous décidons de placer sont visibles sur la figure \ref{fig:get4}.
 \begin{figure}[!ht]
 \centering
-%\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
-\caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 4(\ref{item:o4})}
+\includegraphics[width = .75\textwidth]{./II/images/GET_4.pdf}
+\caption{\label{fig:get4} Graphe des Événements Temporisé de l'ordonnancement 4(\ref{item:o4})}
 \end{figure}
+
+Les calculs pour obtenir le système d'équation du GET ne sont pas détaillé ici. Nous obtenons : 
 \begin{align*}%\label{equ:ordo4}
 \left\lbrace
 \begin{array}{lcl}
@@ -168,11 +176,21 @@ x_{BM_2}(k)&=& 10x_{BM_2}(k-1) \oplus 11x_{AM_1}(k-1) \oplus  6x_{AM2}(k-1)\\
 \end{array}
 \right.
 \end{align*}
+qui revient à écrire en forme d'état : 
 \begin{align}\label{eqn::ee_Ordo4}
 X(k) = \begin{pmatrix}
-20&15&.&19\\
-14&8&.&13\\
-4&.&.&3\\
-11&6&.&10
-\end{pmatrix}X(k-1) = A_3X(k-1)
+20 & 15 & . & 19\\
+14 & 8  & . & 13\\
+4  & .  & . & 3 \\
+11 & 6  & . & 10
+\end{pmatrix}X(k-1) = A_4X(k-1)
 \end{align}
+
+Avec la matrice d'évolution donné en \ref{eqn::ee_Ordo4}, nous pouvons établir le temps de cycle maximum comme dans les ordonnancement 1 et 3 avec la valeur de la valeur propre :
+\begin{equation}
+\lambda(A_4) = 20
+\end{equation}
+
+Comme dans l'ordonnancement étudié en \ref{sub:ordo1}, nous trouvé une valeur propres élevé qui correspond encore une fois à la somme du temps de traitement de toute les machines etceux pour la même raison évoqué dans la première étude.
+
+\section{Synthèse} 
