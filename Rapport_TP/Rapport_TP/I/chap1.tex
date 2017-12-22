@@ -52,7 +52,7 @@ dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessa
 	x(k) &=& A_0 \cdot x(k) + A_1 \cdot x(k-1) + B u(k)\\
 	y(k) &=& C \cdot x(k)
 \end{array}
-\right. \Leftrightarrow
+\right. \Rightarrow
 \left\lbrace\begin{array}{lcl}
 	x(k) &=& A \cdot x(k-1)
 \end{array}\right.
@@ -203,7 +203,7 @@ Nous ajoutons donc un jeton en $p8$ sur la figure \ref{fig:get_train}. Cela donn
 \caption{\label{fig:get_train_decompo2} Graphe des Événements Temporisé décomposé du réseau de transport avec l'ajout d'un nouveau train.}
 \end{figure}
 
-Afin de recalculer la matrice dynamique, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
+Afin de recalculer une nouvelle matrice dynamique $A2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
 
 Voici les nouvelles équations d'état :
 \begin{equation}
@@ -226,9 +226,16 @@ x_{G2}(k) &=&	2x_{G1}(k-1)\\
 x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
 x_{F2}(k) &=&	3x_{B22}(k)\\
 x_{E2}(k) &=&	5x_{F2}(k)   \\  
-x_{E12}(k) &=&	x_{E1}(k)   \\  
+x_{E12}(k) &=&	x_{E1}(k-1)   \\  
 \end{array}
 \right.
 \end{equation}
-La définition de $x_{F1}(k)$ est maintenant exprimée à partir de $x_{E12}(k)$ et $x_{E12}(k)$ à partir de $x_{E1}(k)$, le reste est identique.
+La définition de $x_{F1}(k)$ est maintenant exprimée à partir de $x_{E12}(k)$ et celle de $x_{E12}(k)$ à partir de $x_{E1}(k)$, le reste est identique.
+La dimension de $A2$ est donc agrandie d'un état par rapport a celle de $A$.
+
+
+Voici la matrice dynamique $A2$ de notre système avec un train de plus :
+
+
+
 
