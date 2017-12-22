@@ -8,10 +8,10 @@
 \contentsline {subsection}{\numberline {1.2.3}Valeur propre}{5}{subsection.1.2.3}
 \contentsline {subsection}{\numberline {1.2.4}Vecteur propre}{5}{subsection.1.2.4}
 \contentsline {section}{\numberline {1.3}Commande des conditions initiales}{5}{section.1.3}
-\contentsline {subsection}{\numberline {1.3.1}Vecteur d'\IeC {\'e}tat initiaux}{5}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.1}Vecteur d'\IeC {\'e}tat initiaux}{6}{subsection.1.3.1}
 \contentsline {subsection}{\numberline {1.3.2}Calculs des 10 premiers trains arrivants en gare C et venant de la gare B}{6}{subsection.1.3.2}
 \contentsline {subsection}{\numberline {1.3.3}Temps inter-arriv\IeC {\'e}es identiques}{7}{subsection.1.3.3}
-\contentsline {subsection}{\numberline {1.3.4}Ajout d'un train}{7}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.4}Ajout d'un train}{8}{subsection.1.3.4}
 \contentsline {chapter}{\numberline {2}Optimisation d'une ressource dans un probl\IeC {\`e}me de jobshop}{10}{chapter.2}
 \contentsline {section}{\numberline {2.1}\IeC {\'E}tude du probl\IeC {\`e}me}{10}{section.2.1}
 \contentsline {section}{\numberline {2.2}Mod\IeC {\'e}lisation des GET et repr\IeC {\'e}sentation d'\IeC {\'e}tat et analyse du cycle associ\IeC {\'e}}{10}{section.2.2}

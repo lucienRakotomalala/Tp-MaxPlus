@@ -27,11 +27,36 @@ Afin de réaliser la mise en représentation d'état, nous avons extrait les ég
 \begin{array}{l c l}
 x_{A1}(k) &=&	7x_{B1}(k)\\ 
 x_{B1}(k) &=&	6x_{C1}(k)\\
+x_{C1}(k) &=& 	4x_{D1}(k)\\
 x_{D1}(k) &=&	2x_{D2}(k-1)\\
 x_{D2}(k) &=&	4x_{C2}(k)\\
-x_{C2}(k) &=&	6x_{B1}(k)\\
+x_{C2}(k) &=&	6x_{B2}(k)\\
 x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
 x_{A2}(k) &=&	2x_{A1}(k-2)\\
+x_{E1}(k) &=&	2x_{E2}(k-1)\\
+x_{F1}(k) &=&	5x_{E1}(k)\\
+x_{B12}(k) &=&	3x_{F1}(k)\\
+x_{G1}(k) &=&	2x_{B12}(k)\\
+x_{G2}(k) &=&	2x_{G1}(k-1)\\
+x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
+x_{F2}(k) &=&	3x_{B22}(k)\\
+x_{E2}(k) &=&	5x_{F2}(k)   \\  
+\end{array}
+\right. 
+\end{equation}
+Comme nous avons une expression dépendant de $k$, $k-1$ et $k-2$, nous avons créé un état intermédiaire (voir figure \ref{fig:get_train_decompo}) $x_{A22}(k)$ afin d'avoir des expressions en fonction de $k$ et $k-1$.
+%% A FINIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+\begin{equation}
+\left\lbrace
+\begin{array}{l c l}
+x_{A1}(k) &=&	7x_{B1}(k)\\ 
+x_{B1}(k) &=&	6x_{C1}(k)\\
+x_{C1}(k) &=& 	4x_{D1}(k)\\
+x_{D1}(k) &=&	2x_{D2}(k-1)\\
+x_{D2}(k) &=&	4x_{C2}(k)\\
+x_{C2}(k) &=&	6x_{B2}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
+x_{A2}(k) &=&	2x_{A22}(k-1)\\
 x_{A22}(k) &=&	x_{A1}(k-1)\\
 x_{E1}(k) &=&	2x_{E2}(k-1)\\
 x_{F1}(k) &=&	5x_{E1}(k)\\
@@ -42,7 +67,29 @@ x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
 x_{F2}(k) &=&	3x_{B22}(k)\\
 x_{E2}(k) &=&	5x_{F2}(k)   \\  
 \end{array}
-\right.
+\right. 
+\Leftrightarrow
+\left\lbrace
+\begin{array}{l c l}
+x_{A1}(k) &=&	(7+6+4+2)x_{D2}(k-1)\\ 
+x_{B1}(k) &=&	(6+4+2)x_{D2}(k-1)\\
+x_{C1}(k) &=& 	(4+2)x_{D2}(k-1)\\
+x_{D1}(k) &=&	2x_{D2}(k-1)\\
+x_{D2}(k) &=&	(4+6+7+2)x_{A22}(k) \oplus  (4+6+3+5+2)x_{E2}(k-1)\\
+x_{C2}(k) &=&	(6+7+2)x_{A22}(k) \oplus  (6+3+5+2)x_{E2}(k-1)\\
+x_{B2}(k) &=&	(7+2)x_{A22}(k) \oplus  (3+5+2)x_{E2}(k-1)\\
+x_{A2}(k) &=&	2x_{A22}(k-1)\\
+x_{A22}(k) &=&	x_{A1}(k-1)\\
+x_{E1}(k) &=&	2x_{E2}(k-1)\\
+x_{F1}(k) &=&	(5+2)x_{E2}(k-1)\\
+x_{B12}(k) &=&	(3+5+2)x_{E2}(k-1)\\
+x_{G1}(k) &=&	(2+3+5+2)x_{E2}(k-1)\\
+x_{G2}(k) &=&	2x_{G1}(k-1)\\
+x_{B22}(k) &=&	(2+2)x_{G1}(k-1) \oplus (7+2)x_{A22}(k) \oplus  (3+5+2)x_{E2}(k-1)\\
+x_{F2}(k) &=&	(3+2+2)x_{G1}(k-1) \oplus (3+7+2)x_{A22}(k) \oplus  (3+3+5+2)x_{E2}(k-1)\\
+x_{E2}(k) &=&	(5+3+2+2)x_{G1}(k-1) \oplus (5+3+7+2)x_{A22}(k) \oplus  (5+3+3+5+2)x_{E2}(k-1)   \\  
+\end{array}
+\right. 
 \end{equation}
 On peut remarquer que notre système est autonome, c'est-à-dire qu'il ne présente pas d'entrée ou de sortie 
 dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessaires.
