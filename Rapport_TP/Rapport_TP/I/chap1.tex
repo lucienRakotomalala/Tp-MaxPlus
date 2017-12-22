@@ -21,7 +21,8 @@ Voici la nouvelle représentation d'état correspondant à cette contrainte, fig
 Nous abordons ici, dans l'ordre, la mise en représentation d'état du réseau de transport, l'analyse de réductibilité et le calcul des valeurs et vecteurs propres. 
 \subsection{Représentation d'état}
 Afin de réaliser la mise en représentation d'état, nous avons extrait les égalisés suivantes :
-\begin{align*}
+\begin{equation}
+\label{equ:ee1}
 \left\lbrace
 \begin{array}{l c l}
 x_{A1}(k) &=&	7x_{B1}(k)\\ 
@@ -39,10 +40,10 @@ x_{G1}(k) &=&	2x_{B12}(k)\\
 x_{G2}(k) &=&	2x_{G1}(k-1)\\
 x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
 x_{F2}(k) &=&	3x_{B22}(k)\\
-x_{E1}(k) &=&	5x_{F2}(k)   \\  
+x_{E2}(k) &=&	5x_{F2}(k)   \\  
 \end{array}
 \right.
-\end{align*}
+\end{equation}
 On peut remarquer que notre système est autonome, c'est-à-dire qu'il ne présente pas d'entrée ou de sortie 
 dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessaires.
 \begin{equation}
@@ -51,7 +52,7 @@ dans l'espace d'état suivant, les matrices $B$ et $C$ ne sont donc pas nécessa
 	x(k) &=& A_0 \cdot x(k) + A_1 \cdot x(k-1) + B u(k)\\
 	y(k) &=& C \cdot x(k)
 \end{array}
-\right. \Leftrightarrow
+\right. \Rightarrow
 \left\lbrace\begin{array}{lcl}
 	x(k) &=& A \cdot x(k-1)
 \end{array}\right.
@@ -119,13 +120,13 @@ X0 =
 18  &11  &5   &1   &21  &17  &11  &3   &5   &3   &8   &11  &13  &8   &11  &14  &19 
 \end{array} \right]^T
 \end{equation}
-Pour ce calcul, nous avons dans un premier temps placé, les temps de départ de chaque trains aux indices corresponds au départ de la gare concerné : 
+Pour ce calcul, nous avons dans un premier temps placé, les temps de départ de chaque trains aux indices corresponds au départ de la gare concernée : 
 \begin{description}
 
 \item[Contrainte 1 :] $X0(D1) = 1$; 
 \item[Contrainte 2 :] $X0(A2) = 3$; 
 \item[Contrainte 3 :] $X0(E1) = 3$; 
-\item[Contrainte 4 :] $X0(A22) = 5$ (car 2 u.t déjà consommée) ; 
+\item[Contrainte 4 :] $X0(A22) = 5$ (car 2 u.t déjà consommée en $p0$) ; 
 \item[Contrainte 5 :] $X0(G2) = 8$. 
 \end{description}
 A partir de ces données, nous avons calculé les valeurs des autres états en étudiant le GET.
@@ -148,7 +149,7 @@ L_7(X)= \begin{bmatrix} 11&29&47&65&83&101&119&137&155&173 \end{bmatrix}
 \end{equation}
 
 
-Voici une représentation graphique figure \ref(effectué à l'aide de Matlab) où nous pouvons voir que les temps de départs se stabilise rapidement car la pente est constante au bout d'un certain nombre d'événement.
+Voici une représentation graphique figure \ref{fig:temps_arrivee} (effectué à l'aide de Matlab) où nous pouvons voir que les temps de départs se stabilise rapidement car la pente est constante au bout d'un certain nombre d'événement.
 \begin{figure}[!ht]
 \centering
 \includegraphics[width = .7\textwidth]{./I/images/temps_departs.png}
@@ -187,5 +188,54 @@ Nous pouvons constater qu'à partir du  5\ieme{} départs, tous les trains parte
 Afin d'avoir des temps d'inter-arrivées tous identiques, nous avons refais les opérations nécessaire au calcul de $X$ avec $X_1=vecteur_{propre}$.
 
 De cette façon, nous avons des temps inter-arrivées identiques et qui valent la valeur propre du système soit $18$. Nous l'avons recalculé $\Delta_{cy}$ et toutes les différences de temps valent $18$.
+
+
+\subsection{Ajout d'un train}
+Nous devons ajouter un train afin d'accélérer le temps de cycle. Dans un premier temps, nous allons identifier le cycle a accélérer pour accélérer le réseau, ensuite nous ajouterons un train à la bonne gare et finalement nous évaluerons l'amélioration.
+
+La valeur propre étant le temps du plus long cycle, il faut que l'on trouve le/les sous-cycle(s) qui correspond à cette durée. Cela correspond à, au départ d'un train d'un terminus, le nombre d'unité de temps qu'il faut attendre avant qu'un autre train arrive dans ce même terminus. Sur le GET, cela revient au prochain au temps écoulé entre deux tirs d'une même transition.
+Nous avons trouvé que c'est le trajet E-B  $\rightarrow$  B-E qui prend le plus de temps. Nous allons donc ajouter un train sur la gare E. 
+Nous ajoutons donc un jeton en $p8$ sur la figure \ref{fig:get_train}. Cela donne, une fois décomposé de la même façon que la figure \ref{fig:get_train_decompo}, la figure \ref{fig:get_train_decompo2}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .8\textwidth]{./I/images/train_decompose2.pdf}
+\caption{\label{fig:get_train_decompo2} Graphe des Événements Temporisé décomposé du réseau de transport avec l'ajout d'un nouveau train.}
+\end{figure}
+
+Afin de recalculer une nouvelle matrice dynamique $A2$, nous avons redéfinis les équations d'états de la même façon que précédemment (équation \ref{equ:ee1}). 
+
+Voici les nouvelles équations d'état :
+\begin{equation}
+\label{equ:ee1}
+\left\lbrace
+\begin{array}{l c l}
+x_{A1}(k) &=&	7x_{B1}(k)\\ 
+x_{B1}(k) &=&	6x_{C1}(k)\\
+x_{D1}(k) &=&	2x_{D2}(k-1)\\
+x_{D2}(k) &=&	4x_{C2}(k)\\
+x_{C2}(k) &=&	6x_{B1}(k)\\
+x_{B2}(k) &=&	7x_{A2}(k) \oplus x_{B12}\\
+x_{A2}(k) &=&	2x_{A1}(k-2)\\
+x_{A22}(k) &=&	x_{A1}(k-1)\\
+x_{E1}(k) &=&	2x_{E2}(k-1)\\
+x_{F1}(k) &=&	5x_{E12}(k)\\
+x_{B12}(k) &=&	3x_{F1}(k)\\
+x_{G1}(k) &=&	2x_{B12}(k)\\
+x_{G2}(k) &=&	2x_{G1}(k-1)\\
+x_{B22}(k) &=&	2x_{G2}(k) \oplus x_{B2}(k)\\
+x_{F2}(k) &=&	3x_{B22}(k)\\
+x_{E2}(k) &=&	5x_{F2}(k)   \\  
+x_{E12}(k) &=&	x_{E1}(k-1)   \\  
+\end{array}
+\right.
+\end{equation}
+La définition de $x_{F1}(k)$ est maintenant exprimée à partir de $x_{E12}(k)$ et celle de $x_{E12}(k)$ à partir de $x_{E1}(k)$, le reste est identique.
+La dimension de $A2$ est donc agrandie d'un état par rapport a celle de $A$.
+
+
+Voici la matrice dynamique $A2$ de notre système avec un train de plus :
+
+
 
 
