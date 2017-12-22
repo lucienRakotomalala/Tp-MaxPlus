@@ -1,5 +1,5 @@
 \chapter{Étude d'un système de transport}
-Dans cette première partie, nous allons vous présenter nos travaux sur l'étude d'un système de transport. Dans ce problème, il nous est demandé de mettre en œuvre, avec l'algèbre $(max,+)$, une étude d'un système de GET qui représentera notre système temporisé de transport. Nous commencerons par vous présenter le graphe d'évènements correspondant au procédé étudié, nous effectuerons une analyse de ce système pour enfin essayer d'améliorer le système en modifiant le graphe.
+Dans cette première partie, nous allons vous présenter nos travaux sur l'étude d'un système de transport. Dans ce problème, il nous est demandé de mettre en œuvre, avec l'algèbre $(max,+)$, une étude d'un système de Graphe d'Évènements Temporisé (GET) qui représentera notre système temporisé de transport. Nous commencerons par modéliser le procédé en GET et vous le présenter, nous effectuerons ensuite une analyse de ce système enfin essayer d'améliorer le système en modifiant ajoutant des éléments au réseau à partir de conclusion tirée sur la modélisation.
 
 \section{Graphes d'évènements temporisés}
 Dans un premier temps, nous avons réalisé le graph des événements temporisés (voir figure \ref{fig:get_train}). Ce graph représente les différentes gares, un couple de transition $(x \theta1,x\theta2)$ représente la gare $\theta$, la première représente "le train rentre en gare", le $t_a$ de la place suivante le temps d'attente en gare, et la seconde transition ($x\theta2$) "le train sort de la gare". Les $ta$ des places entre deux entrées ou sorties de gare représentent le temps de trajet sur une ligne de train. Les places $xB12$ et $xB22$ sont des copies  de $xB1$ et $xB2$ afin de représenter les contraintes de synchronisation décritent dans l'énoncé.
@@ -95,9 +95,90 @@ Comme précédemment, nous avons utilité ScicosLab pour calculer le vecteur pro
 vecteur_{propre} = 
 \left[
 \begin{array}{ccccccccccccccccc}
-3 & -4 & -10 & -14 & 2 & -2 & -8 & -31& -15 & -16 & -11 & -8 & -6 & -22 & -10 & -7 & 0
+21 & 14 & 8 & 4 & 20 & 16 & 10 & -13 & 3 & 2 & 7 & 10 & 12 & -4 & 8 & 11 & 18	
 \end{array} \right]^T
 \end{equation}
-\section{Commande des conditions initiales}
 
+\section{Commande des conditions initiales}
+Dans cette partie, nous allons étudier l'évolution des trains et étudier les temps d'arrivés des trains aux différentes gares. 
+Dans un premier temps nous créerons le vecteur d'état initiaux à partir de contraintes spécifiés dans l'énoncé, nous calculerons les temps d'évolutions des trains à partir de ces conditions initiales. Nous étudierons également des contraintes de synchronisation, identifierons l'amélioration du système par ajout d'un train et finalement nous évaluerons l'impact d'une modification du réseau.
+\subsection{Vecteur d'état initiaux}
+Nous avons les contraintes suivantes : 
+\begin{enumerate}
+\item Un train part de la station \textbf{D} à la date \textbf{1};%1
+\item Un train part de la station \textbf{A} à la date \textbf{3};%2
+\item Un train part de la station \textbf{E} à la date \textbf{3};%3
+\item Un train part de la station \textbf{A} à la date \textbf{7};%4
+\item Un train part de la station \textbf{G} à la date \textbf{8}.%5
+\end{enumerate}
+A partir de ces contraintes, nous avons calculé le vecteur initial suivant: 
+\begin{equation}
+X0 = 
+\left[
+\begin{array}{ccccccccccccccccc}
+18  &11  &5   &1   &21  &17  &11  &3   &5   &3   &8   &11  &13  &8   &11  &14  &19 
+\end{array} \right]^T
+\end{equation}
+Pour ce calcul, nous avons dans un premier temps placé, les temps de départ de chaque trains aux indices corresponds au départ de la gare concerné : 
+\begin{description}
+
+\item[Contrainte 1 :] $X0(D1) = 1$; 
+\item[Contrainte 2 :] $X0(A2) = 3$; 
+\item[Contrainte 3 :] $X0(E1) = 3$; 
+\item[Contrainte 4 :] $X0(A22) = 5$ (car 2 u.t déjà consommée) ; 
+\item[Contrainte 5 :] $X0(G2) = 8$. 
+\end{description}
+A partir de ces données, nous avons calculé les valeurs des autres états en étudiant le GET.
+
+
+\subsection{Calculs des 10 premiers trains arrivants en gare C et venant de la gare B}
+Afin d'effectuer l'analyse demandé et pour avoir une vision globale des temps d'arrivées dans les autres gares, nous avons généré les 10 premiers temps d'arrivées de l'ensemble du réseau. (La petite taille du réseau rendant cette génération possible en terme de temps de calcul.)
+
+Pour cela, nous avons initialisé un vecteur de dimension : $\mathbb{R}^{ \text{\emph{nombre d'états}} \times \text{\emph{nombre de temps d'arrivé souhaité}}}$.\\
+Ensuite, nous avons initialisé la première colonne avec le vecteur d'état initiaux et les avons calculer les suivantes dans une boucle en effectuant le calcul suivant : 
+\begin{eqnarray}
+\forall i \in \left\lbrace 2, ..., 10\right\rbrace | X_1 = X0 ,&    X_{i}&=A*X_{(i-1)}\\
+\Leftrightarrow&&\\
+\forall i \in \left\lbrace 1, ..., 10\right\rbrace ,&    X_{i}&=X_0*A^i
+\end{eqnarray}
+
+Les dates de départs correspondants aux trains arrivants en C et venant de B sont ceux  de la ligne 7 de $X$ :
+\begin{equation}
+L_7(X)= \begin{bmatrix} 11&29&47&65&83&101&119&137&155&173 \end{bmatrix}
+\end{equation}
+
+
+Voici une représentation graphique figure \ref(effectué à l'aide de Matlab) où nous pouvons voir que les temps de départs se stabilise rapidement car la pente est constante au bout d'un certain nombre d'événement.
+\begin{figure}[!ht]
+\centering
+\includegraphics[width = .7\textwidth]{./I/images/temps_departs.png}
+\caption{\label{fig:temps_arrivee} Temps de départ des trains dans les différentes gares}
+\end{figure}
+
+
+Nous avons décidé d'étudier la différence suivante $X_i - X_{i-1}$ où $i = \left\lbrace 1,...,9\right\rbrace$. Cela nous a permis de calculer le nombre d'événement nécessaire à l'entrée dans le cycle périodique.
+\begin{equation}
+\left(
+\begin{array}{cc cc cc cc cc}
+22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+4 &  13 & 22 & 18 & 18 & 18 & 18 & 18 & 18 \\
+13 & 22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+7 &  18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+16 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+16 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
+18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 
+\end{array}
+\right)
+\end{equation}
+Nous pouvons constater qu'à partir du  5\ieme{} départs, tous les trains partent toutes les 18 u.t, cela correspond à la valeur propre et cela permet de renforcer la validité de nos calculs, de plus nous pouvions le voir graphiquement sur la figure \ref{fig:temps_arrivee}.
 
