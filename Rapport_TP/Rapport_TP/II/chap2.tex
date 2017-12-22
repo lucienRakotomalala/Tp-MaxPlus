@@ -35,7 +35,7 @@ Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du
 \includegraphics[width = \textwidth]{./II/images/GET.pdf}
 \captionof{figure}{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
 
-\subsection{Ordonnancement 1}
+\subsection{Ordonnancement 1}\label{sub:ordo1}
 
 Nous modélisons maintenant le cas du premier ordonnancement possible décrit rapidement en \ref{item:o1}. Dans ce cycle, la pièce $A$ doit d'abord passer sur la machine $M_2$ puis prendre la machine $M_1$. Ensuite c'est au tour de la pièce $B$ de prendre les machines $M_1$ puis $M_2$. 
 
@@ -49,7 +49,7 @@ Nous obtenons la figure suivante (\ref{fig:get1}). Avec l'outil \emph{Stepper Si
 \end{center}
 \end{figure}
  
-Cependant, pour connaître le temps de cycle, nous devons passer par une rerésentation d'état de notre GET en (max,+) pour calculer la ou les valeurs propres. Les équations d'état du GET sont :
+Cependant, pour connaître le temps de cycle, nous devons passer par une représentation d'état de notre GET en (max,+) pour calculer la ou les valeurs propres. Les équations d'état du GET sont :
 \begin{align*}
 \left\lbrace
 \begin{array}{lcl}
@@ -77,11 +77,15 @@ Nous obtenons avec ScicosLab et la fonction \emph{karp} le résultat suivant : \
 Ce temps de cycle maximal correspond à la somme des temps de traitement de toute les machines. Il était possible de prévoir ce résultat car l'ordonnancement n'est pas optimal, les machines passent du temps en étant inactive. Nous verrons qu'un meilleur ordonnancement est possible dans la suite de ce rapport.
 
 \subsection{Ordonnancement 2}
-L'ordonnancement 2 n'est pas réalisable. En effet, il n'est pas compatible avec la spécification sur l'ordre dans lequel les pièces $A$ et $B$ doivent être usiné par les machines. Nous n'avons alors pas configuré 
+L'ordonnancement 2 n'est pas réalisable. En effet, il n'est pas compatible avec la spécification sur l'ordre dans lequel les pièces $A$ et $B$ doivent être usiné par les machines. Nous n'avons alors pas pu dessiner le GET associé.
+
 \subsection{Ordonnancement 3}
+Nous allons effectuer la même analyse que dans la partie précédente (\ref{sub:ordo1}). Dans cette répartition des traitement de pièces, nous allons synchroniser l'usinage de la pièce $A$ par $M_2$ et de $B$ par $M_1$ puis l'inverse ($A$ par $M_1$ et $B$ par $M_2$). 
+
+Pour obtenir cette séquence, il est nécessaire de disposer le marquage initial de sorte à ce que $x_{AM2}$ et $x_{BM1}$ soit sensibiliser dès le début du traitement.
 \begin{figure}[!ht]
 \centering
-%\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
+\includegraphics[width = \textwidth]{./II/images/GET_3.pdf}
 \caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 3 (\ref{item:o3})}
 \end{figure}
 \begin{align*}%\label{equ:ordo3}
