@@ -156,8 +156,9 @@ Voici une représentation graphique figure \ref(effectué à l'aide de Matlab) o
 \end{figure}
 
 
-Nous avons décidé d'étudier la différence suivante $X_i - X_{i-1}$ où $i = \left\lbrace 1,...,9\right\rbrace$. Cela nous a permis de calculer le nombre d'événement nécessaire à l'entrée dans le cycle périodique.
+Nous avons décidé d'étudier la différence suivante $\Delta_{cy} = X_i - X_{i-1}$ où $i = \left\lbrace 1,...,9\right\rbrace$. Cela nous a permis de calculer le nombre d'événement nécessaire à l'entrée dans le cycle périodique.
 \begin{equation}
+\Delta_{cy} = 
 \left(
 \begin{array}{cc cc cc cc cc}
 22 & 18 & 18 & 18 & 18 & 18 & 18 & 18 & 18 \\
@@ -181,4 +182,10 @@ Nous avons décidé d'étudier la différence suivante $X_i - X_{i-1}$ où $i = 
 \right)
 \end{equation}
 Nous pouvons constater qu'à partir du  5\ieme{} départs, tous les trains partent toutes les 18 u.t, cela correspond à la valeur propre et cela permet de renforcer la validité de nos calculs, de plus nous pouvions le voir graphiquement sur la figure \ref{fig:temps_arrivee}.
+
+\subsection{Temps inter-arrivées identiques}
+Afin d'avoir des temps d'inter-arrivées tous identiques, nous avons refais les opérations nécessaire au calcul de $X$ avec $X_1=vecteur_{propre}$.
+
+De cette façon, nous avons des temps inter-arrivées identiques et qui valent la valeur propre du système soit $18$. Nous l'avons recalculé $\Delta_{cy}$ et toutes les différences de temps valent $18$.
+
 

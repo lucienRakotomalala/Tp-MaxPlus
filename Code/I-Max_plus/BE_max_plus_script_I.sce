@@ -73,7 +73,8 @@ A =full(%zeros(17,17));
     A(E1,E2)    =2;
 
 // Vecteur propre & Valeur(s) propre(s)   
-[Vect_prop, Val_prop]= eigenspace(A); 
+//[Vect_prop, Val_prop]= eigenspace(A); 
+[Val_prop,Vect_prop,p,c,n]=howard(A)    
 // Val_prop = 18
 // Vect_prop = [ 3 ; -4 ; -10 ; -14 ; 2 ; -2 ; -8 ; -31; -15 ; ...
 //              -16 ; -11 ; -8 ; -6 ; -22 ; -10 ; -7 ; 0  ]
@@ -111,5 +112,16 @@ end
 Xcy // On voit qu'à partir du 5ème départs, les trains 
     // mettent 18ut à effectuer leurs trajets. La gare A2 
     X2 = howard(A)
-    
+// temps inter-arrivées identiques
+X=full(%zeros(17,10));
+X(:,1)=Vect_prop;
+for(i = 2:10)
+    X(:,i)=A*X(:,i-1);
+end
+// Différence de temps entre les départs
+Xcy =full(%zeros(17,9));
+for(i = 1:9)
+    Xcy(:,i)=X(:,i+1)-X(:,i);
+end
+
    
