@@ -49,7 +49,44 @@ Nous obtenons la figure suivante (\ref{fig:get1}). Avec l'outil \emph{Stepper Si
 \end{center}
 \end{figure}
  
-Cependant, pour connaître le temps de cycle, nous devons passer par une représentation d'état de notre GET en (max,+) pour calculer la ou les valeurs propres. Les équations d'état du GET sont :
+Nous souhaitons analyser le GET obtenu pour connaitre si celui ci est optimal. Nous devons donc commencer par écrire les équations qui décrivent notre système :  
+\begin{align*}
+&\left\lbrace
+\begin{array}{lcl}
+x_{AM_1}(k)&=&  6x_{AM_2}(k) \oplus 7x_{BM_1}(k-1)\\
+x_{AM_2}(k)&=&4x_{AM_1}(k-1) \oplus 3x_{BM_2}(k-1)\\
+x_{BM_1}(k)&=& 4x_{AM_1}(k) \oplus 7x_{BM_2}(k-1)\\
+x_{BM_2}(k)&=& 6x_{AM_2}(k) \oplus 3x_{BM_1}(k)\\
+\end{array}
+\right.\\
+&\Leftrightarrow \begin{pmatrix}
+x_{AM_1}(k)\\
+x_{AM_2}(k)\\
+x_{BM_1}(k)\\
+x_{BM_2}(k)
+\end{pmatrix} = \begin{pmatrix}
+. & 6 & . & .\\
+. & . & . & .\\
+4 & . & . & .\\
+. & 6 & 3 & .\\
+\end{pmatrix} \begin{pmatrix}
+x_{AM_1}(k)\\
+x_{AM_2}(k)\\
+x_{BM_1}(k)\\
+x_{BM_2}(k)
+\end{pmatrix} \oplus \begin{pmatrix}
+. & . & 7 & .\\
+4 & . & . & 3\\
+. & . & . & 7\\
+. & . & . & .\\
+\end{pmatrix} \begin{pmatrix}
+x_{AM_1}(k-1)\\
+x_{AM_2}(k-1)\\
+x_{BM_1}(k-1)\\
+x_{BM_2}(k-1)
+\end{pmatrix}
+\end{align*}
+
 \begin{align*}
 \left\lbrace
 \begin{array}{lcl}
