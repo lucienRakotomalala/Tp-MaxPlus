@@ -1,5 +1,5 @@
 \chapter{Optimisation d'une ressource dans un problème de jobshop}
-Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent, le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, afin déterminer le cycle de temps associé de chacun.
+Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème à base de \emph{jobshop} dans lequel nous étudierons le travail entre deux machines $M_1$ et $M_2$ sur deux pièces $A$ et $B$. Dans un premier temps, nous modéliserons comme dans le chapitre précédent, le GET associé à notre système. Puis nous étudierons chaque marquage initial de notre graphe, selon les ordonnancement possible, afin de déterminer le cycle de temps associé de chacun.
 
 \section{Étude du problème}
 %% Ordonnancement 1	:		M2 --> A		B
@@ -15,29 +15,29 @@ Cette fois ci, nous allons nous concentrer sur la modélisation d'un problème �
 %%							M1 --> B 		A
 Le problème de cet exercice peut être décomposé en deux sous problèmes équivalents. Le premier concerne l'ordre dans lequel les pièces $A$ et $B$ peuvent être traités par les machines : $A$ ne peut pas passer sur $M_1$ tant qu'elle n'est pas d'abord passer sur $M_2$. Pour la pièce $B$, elle doit d'abord passer par $M_1$ puis elle va sur $M_2$, comme cela est expliqué dans l'ennoncé. 
 
-Le deuxième problème qui apparait n'en ai pas vraiment un, il s'agit de choisir l'ordonnancement des usinages de pièces. Très naturellement, pour 2 machines et 2 pièces il vient $2\times 2$ possibilité d'ordonnancement qui sont : \begin{itemize}
-\item \label{item:o1} \textbf{Ordonnancement 1} $M_2 \rightarrow A$ puis $M_1 \rightarrow A \rightarrow B$ et  $M_2 \rightarrow B$ 
+Le deuxième problème qui apparait n'en ai pas vraiment un, il s'agit de choisir l'ordonnancement des usinages de pièces. Très naturellement, pour 2 machines et 2 pièces il vient $2\times 2$ possibilité d'ordonnancement qui sont : \begin{enumerate}
+\item \label{item:o1}\textbf{Ordonnancement 1} $M_2 \rightarrow A$ puis $M_1 \rightarrow A \rightarrow B$ et  $M_2 \rightarrow B$ 
 \item \label{item:o2}\textbf{Ordonnancement 2} $M_2 \rightarrow B \rightarrow A $ parallèle à $M1 \rightarrow A \rightarrow B$
 \item \label{item:o3}\textbf{Ordonnancement 3}	$M_2 \rightarrow A \rightarrow B $ parallèle à $M1 \rightarrow B \rightarrow A$
 \item \label{item:o4}\textbf{Ordonnancement 4}	$M_1 \rightarrow B$ puis $M_2 \rightarrow A \rightarrow B$ et  $M_1 \rightarrow B$
-\end{itemize}
+\end{enumerate}
 
 Pour modéliser notre problème sous forme de GET, nous aurons besoin des évènements qui lient les machines et les pièces entre elles. Nous pouvons obtenir ces informations à partir du tableau donné dans le sujet de TP. Ces temps d'attentes seront utilisés dans les temps d'attentes des places du GET pour modéliser le temps que met une pièce $x$ à être usiné par une machine $y$.
 
 \section{Modélisation des GET et représentation d'état et analyse du cycle associé}
-\begin{figure}[!ht]
-\centering
-%\includegraphics[width = \textwidth]{./II/images/GET.pdf}
-\caption{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
-\end{figure}
+\begin{center}
 Dans un premier temps, nous avons réalisé le graph des événements temporisés général(voir figure \ref{fig:get}). Ce graph a 4 transitions (en noir). Elles correspondent, en partant de celle en haut à gauche et dans le sens horaire, à \emph{A est usiné dans M1}, \emph{B est usiné dans M1}, \emph{B est usiné dans M2} et à \emph{A est usiné dans M2}. Les annotations \emph{A}, \emph{B}, \emph{M1} et \emph{M2} ne font pas partis du graph, elles font offices de légendes pour la couleurs des éléments du graph.
-
+\includegraphics[width = \textwidth]{./II/images/GET.pdf}
+\captionof{figure}{\label{fig:get} Graphe des Événements Temporisé du \emph{jobshop}}
+\end{center}
 \subsection{Ordonnancement 1}
+Nous modélisons maintenant le cas du premier ordonnancement possible décrit rapidement en \ref{item:o1}. Dans ce cycle, la pièce $A$ doit d'abord passer sur la machine $M_2$ puis prendre la machine $M_1$. Ensuite c'est au tour de la pièce de prendre les machines $M_1$ puis $M_2$. Pour que la pièce $A$ occuppent les première utilisation de A 
 \begin{figure}[!ht]
 \centering
 %\includegraphics[width = \textwidth]{./II/images/GET_1.pdf}
 \caption{\label{fig:get} Graphe des Événements Temporisé de l'ordonnancement 1 (\ref{item:o1})}
 \end{figure}
+
 \begin{align*}
 \left\lbrace
 \begin{array}{lcl}
